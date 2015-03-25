@@ -29,6 +29,7 @@
 				<div class="collapse navbar-collapse" id="mainNav">
 					<ul class="nav navbar-nav">
 						<li><a href="#">Home</a></li>
+						<li><a href="dashboard.php">Dashboard</a></li>
 					</ul>
 				</div>
 			</div>
