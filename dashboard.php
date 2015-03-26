@@ -18,7 +18,7 @@
 					<th>Update</th>
 				</tr>
 			</thead>
-			<tbody data-bind="foreach: awardShows">
+			<tbody data-bind="foreach: data">
 				<tr>
 					<td data-bind="text: ShowName"></td>
 					<td data-bind="text: Description"></td>
@@ -26,7 +26,7 @@
 					<td data-bind="text: Type"></td>
 					<td data-bind="text: Criteria"></td>
 					<td data-bind="text: VotingPanel"></td>
-					<td><button class="btn btn-default">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() {updateRow($index)}">Update</button></td>
 				</tr>
 			</tbody>
 		</table>
