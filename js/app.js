@@ -74,6 +74,11 @@ var AwardWizardViewModel = function() {
 		self.Birthdate = ko.observable(birthdate || "");
 	}
 
+	function Stage(id, setting, title, iteration, type, genre, songNumber, year, theatre, open, closed, previews, performance, running) {
+		var self = this;
+		
+	}
+
 	self.awardShows = ko.observableArray([]);
 	
 	$.getJSON("php/getSample.php", function(shows) {
