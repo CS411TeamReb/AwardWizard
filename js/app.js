@@ -161,8 +161,9 @@ var AwardWizardViewModel = function() {
 			}
 		});
 		
-		self.updateRow = function(index) {
-			console.log(self.updateData()[index]);
+		self.updateRow = function(index, table) {
+			console.log(index);
+			console.log(table);
 		}
 	});
 };

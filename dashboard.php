@@ -26,7 +26,7 @@
 					<td data-bind="text: Type"></td>
 					<td data-bind="text: Criteria"></td>
 					<td data-bind="text: VotingPanel"></td>
-					<td><button class="btn btn-default" data-bind="click: function() {updateRow($index)}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -54,7 +54,7 @@
 					<td data-bind="text: ShowName"></td>
 					<td data-bind="text: WorkID"></td>
 					<td data-bind="text: PersonName"></td>
-					<td><button class="btn btn-default" data-bind="click: function() {updateRow($index)}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -80,7 +80,7 @@
 					<td data-bind="text: BoxOffice"></td>
 					<td data-bind="text: Budget"></td>
 					<td data-bind="text: Year"></td>
-					<td><button class="btn btn-default" data-bind="click: function() {updateRow($index)}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -108,7 +108,7 @@
 					<td data-bind="text: EligibilityYear"></td>
 					<td data-bind="text: Genre"></td>
 					<td data-bind="text: ReleaseYear"></td>
-					<td><button class="btn btn-default" data-bind="click: function() {updateRow($index)}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -132,7 +132,7 @@
 					<td data-bind="text: Occupation"></td>
 					<td data-bind="text: Gender"></td>
 					<td data-bind="text: Birthdate"></td>
-					<td><button class="btn btn-default" data-bind="click: function() {updateRow($index)}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -174,7 +174,7 @@
 					<td data-bind="text: Previews"></td>
 					<td data-bind="text: Performances"></td>
 					<td data-bind="text: Running"></td>
-					<td><button class="btn btn-default" data-bind="click: function() {updateRow($index)}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -206,7 +206,7 @@
 					<td data-bind="text: CameraSetup"></td>
 					<td data-bind="text: MinimumRuntime"></td>
 					<td data-bind="text: MaximumRuntime"></td>
-					<td><button class="btn btn-default" data-bind="click: function() {updateRow($index)}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
 		</table>
