@@ -43,6 +43,7 @@
 					<th>ShowName</th>
 					<th>WorkID</th>
 					<th>PersonName</th>
+					<th>Update</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateHonorData">
@@ -70,6 +71,7 @@
 					<th>BoxOffice</th>
 					<th>Budget</th>
 					<th>Year</th>
+					<th>Update</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateMovieData">
@@ -97,6 +99,7 @@
 					<th>EligibilityYear</th>
 					<th>Genre</th>
 					<th>ReleaseYear</th>
+					<th>Update</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateMusicData">
@@ -123,6 +126,7 @@
 					<th>Occupation</th>
 					<th>Gender</th>
 					<th>Birthdate</th>
+					<th>Update</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updatePeopleData">
@@ -156,6 +160,7 @@
 					<th>Previews</th>
 					<th>Performances</th>
 					<th>Running</th>
+					<th>Update</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateStageData">
@@ -193,6 +198,7 @@
 					<th>CameraSetup</th>
 					<th>MinimumRuntime</th>
 					<th>MaximumRuntime</th>
+					<th>Update</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateTVData">
