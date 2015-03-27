@@ -15,24 +15,6 @@ var AwardWizardViewModel = function() {
 		self.VotingPanel = ko.observable(panel || "");
 	}
 
-	function FictionalLocation(id, location) {
-		var self = this;
-		self.WorkID = ko.observable(id || "");
-		self.Location = ko.observable(location || "");
-	}
-
-	function FilmedIn(id, location) {
-		var self = this;
-		self.WorkID = ko.observable(id || "");
-		self.Location = ko.observable(location || "");
-	}
-
-	function GenreOf(id, genre) {
-		var self = this;
-		self.WorkID = ko.observable(id || "");
-		self.GenreName = ko.observable(genre || "");
-	}
-
 	function Honor(id, name, year, nominatedWon, showName, workId, personName) {
 		var self = this;
 		self.AwardID = ko.observable(id || "");
@@ -106,9 +88,15 @@ var AwardWizardViewModel = function() {
 	}
 
 	self.tableToUpdate = ko.observable("AwardShow");
-	self.availableTables = ko.observableArray(["AwardShow", "FictionalLocation", "FilmedIn", "GenreOf", "Honor", "Movies", "Music", "People", "Stage", "Television"]);
+	self.availableTables = ko.observableArray(["AwardShow", "Honor", "Movies", "Music", "People", "Stage", "Television"]);
 
-	self.updateData = ko.observableArray([]);
+	self.updateAwardData = ko.observableArray([]);
+	self.updateHonorData = ko.observableArray([]);
+	self.updateMovieData = ko.observableArray([]);
+	self.updateMusicData = ko.observableArray([]);
+	self.updatePeopleData = ko.observableArray([]);
+	self.updateStageData = ko.observableArray([]);
+	self.updateTVData = ko.observableArray([]);
 
 	self.tableToUpdate.subscribe(function(newValue) {
 		$.ajax({
@@ -118,60 +106,54 @@ var AwardWizardViewModel = function() {
 			cache: false,
 			success: function(data) {
 				var jsonData = JSON.parse(data);
-				self.updateData.removeAll();
-				var mappedItems = Array();
 				if (newValue === "AwardShow") {
-					mappedItems = $.map(jsonData, function(item) {
+					var mappedAwardShows = $.map(jsonData, function(item) {
 						return new AwardShow(item.ShowName, item.Description, item.Year, item.Type, item.Criteria, item.VotingPanel);
 					});
-				}
-				else if (newValue === "FictionalLocation") {
-					mappedItems = $.map(jsonData, function(item) {
-						return new FictionalLocation(item.WorkID, item.Location);
-					});
-				}
-				else if (newValue === "FilmedIn") {
-					mappedItems = $.map(jsonData, function(item) {
-						return new FilmedIn(item.WorkID, item.Location);
-					});
-				}
-				else if (newValue === "GenreOf") {
-					mappedItems = $.map(jsonData, function(item) {
-						return new GenreOf(item.WorkID, item.GenreName);
-					});
+					self.updateAwardData.removeAll();
+					self.updateAwardData(mappedAwardShows);
 				}
 				else if (newValue === "Honor") {
-					mappedItems = $.map(jsonData, function(item) {
+					var mappedHonors = $.map(jsonData, function(item) {
 						return new Honor(item.AwardID, item.AwardName, item.YearGiven, item.NominatedWon, item.ShowName, item.WorkID, item.PersonName);
 					});
+					self.updateHonorData.removeAll();
+					self.updateHonorData(mappedHonors);
 				}
 				else if (newValue === "Movies") {
-					mappedItems = $.map(jsonData, function(item) {
+					var mappedMovies = $.map(jsonData, function(item) {
 						return new Movie(item.WorkID, item.Title, item.Rating, item.BoxOffice, item.Budget, item.Year);
 					});
+					self.updateMovieData.removeAll();
+					self.updateMovieData(mappedMovies);
 				}
 				else if (newValue === "Music") {
-					mappedItems = $.map(jsonData, function(item) {
-						return new Music(item.WorkID, item.Title, item.Rating, item.BoxOffice, item.Budget, item.Year);
+					var mappedMusic = $.map(jsonData, function(item) {
+						return new Music(item.WorkID, item.Title, item.Artist, item.isSingle, item.EligibilityYear, item.Genre, item.ReleaseYear);
 					});
+					self.updateMusicData.removeAll();
+					self.updateMusicData(mappedMusic);
 				}
 				else if (newValue === "People") {
-					mappedItems = $.map(jsonData, function(item) {
+					var mappedPeople = $.map(jsonData, function(item) {
 						return new People(item.Name, item.PlaceOrigin, item.Occupation, item.Gender, item.Birthdate);
 					});
+					self.updatePeopleData.removeAll();
+					self.updatePeopleData(mappedPeople);
 				}
 				else if (newValue === "Stage") {
-					mappedItems = $.map(jsonData, function(item) {
+					var mappedStage = $.map(jsonData, function(item) {
 						return new Stage(item.WorkID, item.Setting, item.Title, item.Iteration, item.Type, item.Genre, item.SongNumber, item.YEAR, item.Theatre, item.Open, item.Closed, item.Previews, item.Performances, item.Running);
-					})
+					});
+					self.updateStageData.removeAll();
+					self.updateStageData(mappedStage);
 				}
 				else if (newValue === "Television") {
-					mappedItems = $.map(jsonData, function(item) {
+					var mappedTelevision = $.map(jsonData, function(item) {
 						return new Television(item.WorkID, item.Title, item.Episodes, item.Seasons, item.StillRunning, item.Network, item.CameraSetup, item.MinimumRuntime, item.MaximumRuntime);
-					})
-				}
-				for (var i = 0; i < mappedItems.length; i++) {
-					self.updateData.push(mappedItems[i]);
+					});
+					self.updateTVData.removeAll();
+					self.updateTVData(mappedTelevision);
 				}
 			},
 			error: function() {
