@@ -53,7 +53,7 @@ var AwardWizardViewModel = function() {
 		self.PlaceOrigin = ko.observable(place || "");
 		self.Occupation = ko.observable(occupation || "");
 		self.Gender = ko.observable(gender || "");
-		self.Birthdate = ko.observable(new Date(birthdate) || Date.now());
+		self.Birthdate = ko.observable(new Date(birthdate) || new Date());
 	}
 
 	function Stage(id, setting, title, iteration, type, genre, songNumber, year, theatre, open, closed, previews, performance, running) {
@@ -67,8 +67,8 @@ var AwardWizardViewModel = function() {
 		self.SongNumber = ko.observable(songNumber || 0);
 		self.YEAR = ko.observable(year || 2015);
 		self.Theatre = ko.observable(theatre || "");
-		self.Open = ko.observable(new Date(open) || Date.now());
-		self.Closed = ko.observable(new Date(closed) || Date.now());
+		self.Open = ko.observable(new Date(open) || new Date());
+		self.Closed = ko.observable(new Date(closed) || new Date());
 		self.Previews = ko.observable(previews || 0);
 		self.Performances = ko.observable(performance || 0);
 		self.Running = ko.observable(running || 0);
@@ -98,7 +98,7 @@ var AwardWizardViewModel = function() {
 	self.updateStageData = ko.observableArray([]);
 	self.updateTVData = ko.observableArray([]);
 
-	self.tableToUpdate.subscribe(function(newValue) {
+	function refresh(newValue) {
 		$.ajax({
 			url: "php/getData.php",
 			type: "get",
@@ -160,63 +160,68 @@ var AwardWizardViewModel = function() {
 				alert("Shit, something went wrong.");
 			}
 		});
-		
-		self.updateRow = function(index, table) {
-			var sendData = {};
-			if (table === "AwardShow") {
-				sendData = ko.toJS({
-					"table": table,
-					"data": self.updateAwardData()[index]
-				});
-			}
-			else if (table === "Honor") {
-				sendData = ko.toJS({
-					"table": table,
-					"data": self.updateHonorData()[index]
-				});
-			}
-			else if (table === "Movies") {
-				sendData = ko.toJS({
-					"table": table,
-					"data": self.updateMovieData()[index]
-				})
-			}
-			else if (table === "Music") {
-				sendData = ko.toJS({
-					"table": table,
-					"data": self.updateMusicData()[index]
-				});
-			}
-			else if (table === "People") {
-				sendData = ko.toJS({
-					"table": table,
-					"data": self.updatePeopleData()[index]
-				})
-			}
-			else if (table === "Stage") {
-				sendData = ko.toJS({
-					"table": table,
-					"data": self.updateStageData()[index]
-				});
-			}
-			else if (table === "Television") {
-				sendData = ko.toJS({
-					"table": table,
-					"data": self.updateTVData()[index]
-				});
-			}
+	}
 
-			$.ajax({
-				url: 'php/update.php', 
-				type: 'post',
-				data: sendData,
-				success: function() {
-					alert("Your update was successful!");
-				},
-				error: function() {
-					alert("Shit, something went wrong.");
-				}
+	self.tableToUpdate.subscribe(function(newValue) {
+		refresh(newValue);
+	});
+
+	self.updateRow = function(index, table) {
+		var sendData = {};
+		if (table === "AwardShow") {
+			sendData = ko.toJS({
+				"table": table,
+				"data": self.updateAwardData()[index]
 			});
 		}
-	});
+		else if (table === "Honor") {
+			sendData = ko.toJS({
+				"table": table,
+				"data": self.updateHonorData()[index]
+			});
+		}
+		else if (table === "Movies") {
+			sendData = ko.toJS({
+				"table": table,
+				"data": self.updateMovieData()[index]
+			});
+		}
+		else if (table === "Music") {
+			sendData = ko.toJS({
+				"table": table,
+				"data": self.updateMusicData()[index]
+			});
+		}
+		else if (table === "People") {
+			sendData = ko.toJS({
+				"table": table,
+				"data": self.updatePeopleData()[index]
+			});
+		}
+		else if (table === "Stage") {
+			sendData = ko.toJS({
+				"table": table,
+				"data": self.updateStageData()[index]
+			});
+		}
+		else if (table === "Television") {
+			sendData = ko.toJS({
+				"table": table,
+				"data": self.updateTVData()[index]
+			});
+		}
+
+		$.ajax({
+			url: 'php/update.php', 
+			type: 'post',
+			data: sendData,
+			success: function() {
+				refresh(table);
+				alert("Your update was successful!");
+			},
+			error: function() {
+				alert("Shit, something went wrong.");
+			}
+		});
+	}
 };

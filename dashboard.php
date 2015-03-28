@@ -25,7 +25,7 @@
 					<td><input class="form-control" data-bind="value: Year"></input></td>
 					<td><input class="form-control" data-bind="value: Type"></input></td>
 					<td><textarea class="form-control" data-bind="value: Criteria"></textarea></td>
-					<td><textarea class="form-control" data-bind="text: VotingPanel"></textarea></td>
+					<td><textarea class="form-control" data-bind="value: VotingPanel"></textarea></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
@@ -97,12 +97,12 @@
 			</thead>
 			<tbody data-bind="foreach: updateMusicData">
 				<tr>
-					<td data-bind="text: Title"></td>
-					<td data-bind="text: Artist"></td>
-					<td data-bind="text: isSingle"></td>
-					<td data-bind="text: EligibilityYear"></td>
-					<td data-bind="text: Genre"></td>
-					<td data-bind="text: ReleaseYear"></td>
+					<td><input class="form-control" data-bind="value: Title" /></td>
+					<td><input class="form-control" data-bind="value: Artist" /></td>
+					<td><input class="form-control" data-bind="value: isSingle" /></td>
+					<td><input class="form-control" data-bind="value: EligibilityYear" /></td>
+					<td><input class="form-control" data-bind="value: Genre" /></td>
+					<td><input class="form-control" data-bind="value: ReleaseYear" /></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
@@ -110,6 +110,7 @@
 	</div>
 	<div id="peopleUpdate" data-bind="visible: tableToUpdate() == 'People'">
 		<p>Update People</p>
+		<p>Please enter date changes in the format of mm/dd/yyyy.</p>
 		<table class="table">
 			<thead>
 				<tr>
@@ -124,10 +125,10 @@
 			<tbody data-bind="foreach: updatePeopleData">
 				<tr>
 					<td data-bind="text: Name"></td>
-					<td data-bind="text: PlaceOrigin"></td>
-					<td data-bind="text: Occupation"></td>
-					<td data-bind="text: Gender"></td>
-					<td data-bind="text: Birthdate"></td>
+					<td><input class="form-control" data-bind="value: PlaceOrigin"></td>
+					<td><input class="form-control" data-bind="value: Occupation" /></td>
+					<td><input class="form-control" data-bind="value: Gender" /></td>
+					<td><input class="form-control" data-bind="value: Birthdate" /></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
@@ -135,6 +136,7 @@
 	</div>
 	<div id="stageUpdate" data-bind="visible: tableToUpdate() == 'Stage'">
 		<p>Update Stage</p>
+		<p>Please enter date changes in the format of mm/dd/yyyy.</p>
 		<table class="table">
 			<thead>
 				<tr>
@@ -156,19 +158,19 @@
 			</thead>
 			<tbody data-bind="foreach: updateStageData">
 				<tr>
-					<td data-bind="text: Setting"></td>
-					<td data-bind="text: Title"></td>
-					<td data-bind="text: Iteration"></td>
-					<td data-bind="text: Type"></td>
-					<td data-bind="text: Genre"></td>
-					<td data-bind="text: SongNumber"></td>
-					<td data-bind="text: YEAR"></td>
-					<td data-bind="text: Theatre"></td>
-					<td data-bind="text: Open"></td>
-					<td data-bind="text: Closed"></td>
-					<td data-bind="text: Previews"></td>
-					<td data-bind="text: Performances"></td>
-					<td data-bind="text: Running"></td>
+					<td><input class="form-control" data-bind="value: Setting" /></td>
+					<td><input class="form-control" data-bind="value: Title" /></td>
+					<td><input class="form-control" data-bind="value: Iteration" /></td>
+					<td><input class="form-control" data-bind="value: Type" /></td>
+					<td><input class="form-control" data-bind="value: Genre" /></td>
+					<td><input class="form-control" data-bind="value: SongNumber" /></td>
+					<td><input class="form-control" data-bind="value: YEAR" /></td>
+					<td><input class="form-control" data-bind="value: Theatre" /></td>
+					<td><input class="form-control" data-bind="value: Open" /></td>
+					<td><input class="form-control" data-bind="value: Closed" /></td>
+					<td><input class="form-control" data-bind="value: Previews" /></td>
+					<td><input class="form-control" data-bind="value: Performances" /></td>
+					<td><input class="form-control" data-bind="value: Running" /></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
@@ -192,14 +194,14 @@
 			</thead>
 			<tbody data-bind="foreach: updateTVData">
 				<tr>
-					<td data-bind="text: Title"></td>
-					<td data-bind="text: Episodes"></td>
-					<td data-bind="text: Seasons"></td>
-					<td data-bind="text: StillRunning"></td>
-					<td data-bind="text: Network"></td>
-					<td data-bind="text: CameraSetup"></td>
-					<td data-bind="text: MinimumRuntime"></td>
-					<td data-bind="text: MaximumRuntime"></td>
+					<td><input class="form-control" data-bind="value: Title" /></td>
+					<td><input class="form-control" data-bind="value: Episodes" /></td>
+					<td><input class="form-control" data-bind="value: Seasons" /></td>
+					<td><input class="form-control" data-bind="value: StillRunning" /></td>
+					<td><input class="form-control" data-bind="value: Network" /></td>
+					<td><input class="form-control" data-bind="value: CameraSetup" /></td>
+					<td><input class="form-control" data-bind="value: MinimumRuntime" /></td>
+					<td><input class="form-control" data-bind="value: MaximumRuntime" /></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
