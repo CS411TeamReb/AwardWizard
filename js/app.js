@@ -162,8 +162,61 @@ var AwardWizardViewModel = function() {
 		});
 		
 		self.updateRow = function(index, table) {
-			console.log(index);
-			console.log(table);
+			var sendData = {};
+			if (table === "AwardShow") {
+				sendData = ko.toJS({
+					"table": table,
+					"data": self.updateAwardData()[index]
+				});
+			}
+			else if (table === "Honor") {
+				sendData = ko.toJS({
+					"table": table,
+					"data": self.updateHonorData()[index]
+				});
+			}
+			else if (table === "Movies") {
+				sendData = ko.toJS({
+					"table": table,
+					"data": self.updateMovieData()[index]
+				})
+			}
+			else if (table === "Music") {
+				sendData = ko.toJS({
+					"table": table,
+					"data": self.updateMusicData()[index]
+				});
+			}
+			else if (table === "People") {
+				sendData = ko.toJS({
+					"table": table,
+					"data": self.updatePeopleData()[index]
+				})
+			}
+			else if (table === "Stage") {
+				sendData = ko.toJS({
+					"table": table,
+					"data": self.updateStageData()[index]
+				});
+			}
+			else if (table === "Television") {
+				sendData = ko.toJS({
+					"table": table,
+					"data": self.updateTVData()[index]
+				});
+			}
+
+			$.ajax({
+				url: 'php/update.php', 
+				type: 'post',
+				data: sendData,
+				success: function() {
+					alert("Your update was successful!");
+				},
+				error: function() {
+					alert("Shit, something went wrong.");
+				}
+			});
 		}
 	});
 };

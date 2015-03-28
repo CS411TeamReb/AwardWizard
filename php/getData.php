@@ -16,5 +16,6 @@
 	}
 	$data = $resultArray;
 
+	mysql_close($connection);
 	echo json_encode($data);
 ?>

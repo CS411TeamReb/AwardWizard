@@ -21,11 +21,11 @@
 			<tbody data-bind="foreach: updateAwardData">
 				<tr>
 					<td data-bind="text: ShowName"></td>
-					<td data-bind="text: Description"></td>
-					<td data-bind="text: Year"></td>
-					<td data-bind="text: Type"></td>
-					<td data-bind="text: Criteria"></td>
-					<td data-bind="text: VotingPanel"></td>
+					<td><textarea class="form-control" data-bind="value: Description"></textarea></td>
+					<td><input class="form-control" data-bind="value: Year"></input></td>
+					<td><input class="form-control" data-bind="value: Type"></input></td>
+					<td><textarea class="form-control" data-bind="value: Criteria"></textarea></td>
+					<td><textarea class="form-control" data-bind="text: VotingPanel"></textarea></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
@@ -36,25 +36,21 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>AwardID</th>
 					<th>AwardName</th>
 					<th>YearGiven</th>
 					<th>NominatedWon</th>
 					<th>ShowName</th>
-					<th>WorkID</th>
 					<th>PersonName</th>
 					<th>Update</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateHonorData">
 				<tr>
-					<td data-bind="text: AwardID"></td>
 					<td data-bind="text: AwardName"></td>
-					<td data-bind="text: YearGiven"></td>
-					<td data-bind="text: NominatedWon"></td>
-					<td data-bind="text: ShowName"></td>
-					<td data-bind="text: WorkID"></td>
-					<td data-bind="text: PersonName"></td>
+					<td><input class="form-control" data-bind="value: YearGiven"></input></td>
+					<td><input class="form-control" data-bind="value: NominatedWon"></input></td>
+					<td><input class="form-control" data-bind="value: ShowName"></input></td>
+					<td><input class="form-control" data-bind="value: PersonName"></input></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
@@ -65,23 +61,21 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>WorkID</th>
 					<th>Title</th>
 					<th>Rating</th>
-					<th>BoxOffice</th>
-					<th>Budget</th>
+					<th>BoxOffice (in millions)</th>
+					<th>Budget (in millions)</th>
 					<th>Year</th>
 					<th>Update</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateMovieData">
 				<tr>
-					<td data-bind="text: WorkID"></td>
-					<td data-bind="text: Title"></td>
-					<td data-bind="text: Rating"></td>
-					<td data-bind="text: BoxOffice"></td>
-					<td data-bind="text: Budget"></td>
-					<td data-bind="text: Year"></td>
+					<td><input class="form-control" data-bind="value: Title" /></td>
+					<td><input class="form-control" data-bind="value: Rating" /></td>
+					<td><input class="form-control" data-bind="value: BoxOffice" /></td>
+					<td><input class="form-control" data-bind="value: Budget" /></td>
+					<td><input class="form-control" data-bind="value: Year" /></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
 				</tr>
 			</tbody>
@@ -92,7 +86,6 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>WorkID</th>
 					<th>Title</th>
 					<th>Artist</th>
 					<th>isSingle</th>
@@ -104,7 +97,6 @@
 			</thead>
 			<tbody data-bind="foreach: updateMusicData">
 				<tr>
-					<td data-bind="text: WorkID"></td>
 					<td data-bind="text: Title"></td>
 					<td data-bind="text: Artist"></td>
 					<td data-bind="text: isSingle"></td>
@@ -146,7 +138,6 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>WorkID</th>
 					<th>Setting</th>
 					<th>Title</th>
 					<th>Iteration</th>
@@ -165,7 +156,6 @@
 			</thead>
 			<tbody data-bind="foreach: updateStageData">
 				<tr>
-					<td data-bind="text: WorkID"></td>
 					<td data-bind="text: Setting"></td>
 					<td data-bind="text: Title"></td>
 					<td data-bind="text: Iteration"></td>
@@ -189,7 +179,6 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>WorkID</th>
 					<th>Title</th>
 					<th>Episodes</th>
 					<th>Seasons</th>
@@ -203,7 +192,6 @@
 			</thead>
 			<tbody data-bind="foreach: updateTVData">
 				<tr>
-					<td data-bind="text: WorkID"></td>
 					<td data-bind="text: Title"></td>
 					<td data-bind="text: Episodes"></td>
 					<td data-bind="text: Seasons"></td>
