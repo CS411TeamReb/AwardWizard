@@ -30,6 +30,7 @@
 					<ul class="nav navbar-nav">
 						<li><a href="index.php">Home</a></li>
 						<li><a href="dashboard.php">Dashboard</a></li>
+						<li><a href="search.php">Searc</a></li>
 					</ul>
 				</div>
 			</div>
