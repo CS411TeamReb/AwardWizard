@@ -9,30 +9,26 @@
 </br>
 <div class="btn-group" role="group" aria-label="...">
 <table>
-<tr>
 		<thead>
+			<tr>
 				<td>Award Name</td>
 				<td>Nominated or Won</td>
 				<td>Person</td>
 				<td>Award Show</td>
 				<td>Year Given</td>
-
+			<tr/>
 		</thead>
-</tr>
-</br>
-
 		<tbody data-bind="foreach: honorSearchResults ">
-<tr>
+			<tr>
 				<td data-bind="text: AwardName"></td>
 				<td data-bind="text: Nominated"></td>
 				<td data-bind="text: Person"></td>
 				<td data-bind="text: Show"></td>
 				<td data-bind="text: Year"></td>
-</tr>
+			</tr>
 		</tbody>
-</table>
+	</table>
 </div>
-</br>
 <?php
 	include 'layout/footer.php';
 ?>

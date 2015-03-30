@@ -1,7 +1,8 @@
 <?php
 	include_once 'connect.php';
 	$connection = connect();
-	mysql_select_db('rsturm2_awardtest');
+	//mysql_select_db('rsturm2_awardtest');
+	mysql_select_db('elchao2_Test');
 
 	$term = $_GET['search'];
         $result = mysql_query("SELECT * FROM Television WHERE Title LIKE '%$term%'");

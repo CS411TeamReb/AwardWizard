@@ -9,8 +9,8 @@
 </br>
 <div class="btn-group" role="group" aria-label="...">
 <table>
-<tr>
 		<thead>
+			<tr>
 				<td>Title</td>
 				<td>Setting</td>
 				<td>Iteration</td>
@@ -27,10 +27,8 @@
 
 
 
-
+			</tr>
 		</thead>
-</tr>
-</br>
 
 		<tbody data-bind="foreach: stageSearchResults ">
 <tr>
@@ -53,7 +51,6 @@
 		</tbody>
 </table>
 </div>
-</br>
 <?php
 	include 'layout/footer.php';
 ?>

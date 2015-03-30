@@ -9,16 +9,15 @@
 </br>
 <div class="btn-group" role="group" aria-label="...">
 <table>
-<tr>
 		<thead>
+			<tr>
 				<td>Title</td>
 				<td>Rating</td>
 				<td>Box Office</td>
 				<td>Budget</td>
 				<td>Year</td>
+			</tr>
 		</thead>
-</tr>
-</br>
 
 		<tbody data-bind="foreach: movieSearchResults ">
 <tr>
@@ -31,7 +30,6 @@
 		</tbody>
 </table>
 </div>
-</br>
 <?php
 	include 'layout/footer.php';
 ?>
