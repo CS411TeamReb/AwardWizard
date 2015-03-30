@@ -9,16 +9,15 @@
 </br>
 <div class="btn-group" role="group" aria-label="...">
 <table>
-<tr>
 		<thead>
+			<tr>
 				<td>Name</td>
 				<td>Place of Origin</td>
 				<td>Occupation</td>
 				<td>Gender</td>
 				<td>Birthdate</td>
+			</tr>
 		</thead>
-</tr>
-</br>
 
 		<tbody data-bind="foreach: personSearchResults">
 <tr>
@@ -31,7 +30,6 @@
 		</tbody>
 </table>
 </div>
-</br>
 <?php
 	include 'layout/footer.php';
 ?>

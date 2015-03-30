@@ -9,8 +9,8 @@
 </br>
 <div class="btn-group" role="group" aria-label="...">
 <table>
-<tr>
 		<thead>
+			<tr>
 				<td>Title</td>
 				<td>Setting</td>
 				<td>Iteration</td>
@@ -27,10 +27,8 @@
 
 
 
-
+			</tr>
 		</thead>
-</tr>
-</br>
 
 		<tbody data-bind="foreach: stageSearchResults ">
 <tr>
@@ -40,7 +38,7 @@
 				<td data-bind="text: Type"></td>
 				<td data-bind="text: Genre"></td>
 				<td data-bind="text: SongNumber"></td>
-				<td data-bind="text: Year"></td>
+				<td data-bind="text: YEAR"></td>
 				<td data-bind="text: Theatre"></td>
 				<td data-bind="text: Open"></td>
 				<td data-bind="text: Closed"></td>
@@ -53,7 +51,6 @@
 		</tbody>
 </table>
 </div>
-</br>
 <?php
 	include 'layout/footer.php';
 ?>

@@ -1,8 +1,8 @@
 <?php
 	include_once 'connect.php';
 	$connection = connect();
-	mysql_select_db('rsturm2_awardtest');
-
+	mysql_select_db('awardwiz_main');
+	
 	$term = $_GET['search'];
         $result = mysql_query("SELECT * FROM AwardShow WHERE ShowName LIKE '%$term%'");
 
