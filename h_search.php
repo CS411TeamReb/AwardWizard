@@ -21,10 +21,10 @@
 		<tbody data-bind="foreach: honorSearchResults ">
 			<tr>
 				<td data-bind="text: AwardName"></td>
-				<td data-bind="text: Nominated"></td>
-				<td data-bind="text: Person"></td>
-				<td data-bind="text: Show"></td>
-				<td data-bind="text: Year"></td>
+				<td data-bind="text: NominatedWon"></td>
+				<td data-bind="text: PersonName"></td>
+				<td data-bind="text: ShowName"></td>
+				<td data-bind="text: YearGiven"></td>
 			</tr>
 		</tbody>
 	</table>

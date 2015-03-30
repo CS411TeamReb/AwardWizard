@@ -38,7 +38,7 @@
 				<td data-bind="text: Type"></td>
 				<td data-bind="text: Genre"></td>
 				<td data-bind="text: SongNumber"></td>
-				<td data-bind="text: Year"></td>
+				<td data-bind="text: YEAR"></td>
 				<td data-bind="text: Theatre"></td>
 				<td data-bind="text: Open"></td>
 				<td data-bind="text: Closed"></td>

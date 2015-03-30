@@ -1,7 +1,7 @@
 <?php
 	include_once 'connect.php';
 	$connection = connect();
-	mysql_select_db('elchao2_Test');
+	mysql_select_db('awardwiz_main');
 	
 	$table = $_GET['table'];
 	$result = mysql_query(sprintf("SELECT * FROM %s", $table));
