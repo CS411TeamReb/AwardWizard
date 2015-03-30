@@ -1,8 +1,8 @@
 $(document).ready(function() {
-	ko.applyBindings(new AwardWizardViewModel());
+	ko.applyBindings(new TestViewModel());
 });
 
-var AwardWizardViewModel = function() {
+var TestViewModel = function() {
 	var self = this;
 
 	function AwardShow(name, description, year, type, criteria, panel) {
@@ -86,8 +86,8 @@ var AwardWizardViewModel = function() {
 		self.MinimumRuntime = ko.observable(minr || 0);
 		self.MaximumRuntime = ko.observable(maxr || 0);
 	}
-
-	self.tableToUpdate = ko.observable("AwardShow");
+    
+    self.tableToUpdate = ko.observable("AwardShow");
 	self.availableTables = ko.observableArray(["AwardShow", "Honor", "Movies", "Music", "People", "Stage", "Television"]);
 
 	self.updateAwardData = ko.observableArray([]);
@@ -218,6 +218,177 @@ var AwardWizardViewModel = function() {
 			success: function() {
 				refresh(table);
 				alert("Your update was successful!");
+			},
+			error: function() {
+				alert("Shit, something went wrong.");
+			}
+		});
+	}
+
+    self.search = ko.observable();
+
+	self.awardShowSearchResults = ko.observableArray([new AwardShow()]);
+    self.personSearchResults = ko.observableArray([new People()]);
+    self.televisionSearchResults = ko.observableArray([new Television()]);
+    self.stageSearchResults = ko.observableArray([new Stage()]);
+    self.movieSearchResults = ko.observableArray([new Movie()]);
+    self.musicSearchResults = ko.observableArray([new Music()]);
+    self.honorSearchResults = ko.observableArray([new Honor()]);
+
+	self.searchForH = function() {
+		$.ajax({
+			url: "php/honorSearch.php",
+			type: "get",
+			data: "search=" + encodeURIComponent(self.search().toString()),
+			cache: false,
+			success: function(shows) {
+            	var showData = JSON.parse(shows);
+            	var mappedShows = $.map(showData, function(item) {
+                	return new Honor(item.AwardID, item.AwardName, item.YearGiven, item.NominatedWon, item.ShowName, item.WorkID, item.PersonName);
+                });
+                self.honorSearchResults.removeAll();
+                for(var i = 0; i < mappedShows.length; i++) {
+                	self.honorSearchResults.push(mappedShows[i]);
+                }
+				alert("Submitted to search!");
+			},
+			error: function() {
+				alert("Shit, something went wrong.");
+			}
+		});
+	}
+
+    self.searchForMU = function() {
+		$.ajax({
+			url: "php/musicSearch.php",
+			type: "get",
+			data: "search=" + encodeURIComponent(self.search().toString()),
+			cache: false,
+			success: function(shows) {
+            	var showData = JSON.parse(shows);
+            	var mappedShows = $.map(showData, function(item) {
+                	return new Music(item.WorkID, item.Title, item.Artist, item.isSingle, item.EligibilityYear, item.Genre, item.ReleaseYear);
+                });
+                self.musicSearchResults.removeAll();
+                for(var i = 0; i < mappedShows.length; i++) {
+                	self.musicSearchResults.push(mappedShows[i]);
+                }
+				alert("Submitted to search!");
+			},
+			error: function() {
+				alert("Shit, something went wrong.");
+			}
+		});
+	}
+
+    self.searchForMV = function() {
+		$.ajax({
+			url: "php/movieSearch.php",
+			type: "get",
+			data: "search=" + encodeURIComponent(self.search().toString()),
+			cache: false,
+			success: function(shows) {
+            	var showData = JSON.parse(shows);
+            	var mappedShows = $.map(showData, function(item) {
+                	return new Movie(item.WorkID, item.Title, item.Rating, item.BoxOffice, item.Budget, item.Year);
+                });
+                self.movieSearchResults.removeAll();
+                for(var i = 0; i < mappedShows.length; i++) {
+                	self.movieSearchResults.push(mappedShows[i]);
+                }
+				alert("Submitted to search!");
+			},
+			error: function() {
+				alert("Shit, something went wrong.");
+			}
+		});
+	}
+    
+    self.searchForS = function() {
+		$.ajax({
+			url: "php/stageSearch.php",
+			type: "get",
+			data: "search=" + encodeURIComponent(self.search().toString()),
+			cache: false,
+			success: function(shows) {
+            	var showData = JSON.parse(shows);
+            	var mappedShows = $.map(showData, function(item) {
+                	return new Stage(item.WorkID, item.Setting, item.Title, item.Iteration, item.Type, item.Genre, item.SongNumber, item.YEAR, item.Theatre, item.Open, item.Closed, item.Previews, item.Performances, item.Running);
+                });
+                self.stageSearchResults.removeAll();
+                for(var i = 0; i < mappedShows.length; i++) {
+                	self.stageSearchResults.push(mappedShows[i]);
+                }
+				alert("Submitted to search!");
+			},
+			error: function() {
+				alert("Shit, something went wrong.");
+			}
+		});
+	}
+
+    self.searchForAS = function() {
+		$.ajax({
+			url: "php/awardShowSearch.php",
+			type: "get",
+			data: "search=" + encodeURIComponent(self.search().toString()),
+			cache: false,
+			success: function(shows) {
+            	var showData = JSON.parse(shows);
+            	var mappedShows = $.map(showData, function(item) {
+                	return new AwardShow(item.ShowName, item.Description, item.Year, item.Type, item.Criteria, item.VotingPanel);
+                });
+                self.awardShowSearchResults.removeAll();
+                for(var i = 0; i < mappedShows.length; i++) {
+                	self.awardShowSearchResults.push(mappedShows[i]);
+                }
+				alert("Submitted to search!");
+			},
+			error: function() {
+				alert("Shit, something went wrong.");
+			}
+		});
+	}
+        
+    self.searchForP = function() {
+		$.ajax({
+			url: "php/personSearch.php",
+			type: "get",
+			data: "search=" + encodeURIComponent(self.search().toString()),
+			cache: false,
+			success: function(shows) {
+            	var showData = JSON.parse(shows);
+            	var mappedShows = $.map(showData, function(item) {
+                	return new People(item.Name, item.PlaceOrigin, item.Occupation, item.Gender, item.Birthdate);
+                });
+                self.personSearchResults.removeAll();
+                for(var i = 0; i < mappedShows.length; i++) {
+                	self.personSearchResults.push(mappedShows[i]);
+                }
+				alert("Submitted to search!");
+			},
+			error: function() {
+				alert("Shit, something went wrong.");
+			}
+		});
+	}
+        
+    self.searchForTV = function() {
+		$.ajax({
+			url: "php/tvSearch.php",
+			type: "get",
+			data: "search=" + encodeURIComponent(self.search().toString()),
+			cache: false,
+			success: function(shows) {
+            	var showData = JSON.parse(shows);
+            	var mappedShows = $.map(showData, function(item) {
+                	return new Television(item.WorkID, item.Title, item.Episodes, item.Seasons, item.StillRunning, item.Network, item.CameraSetup, item.MinimumRuntime, item.MaximumRuntime);
+                });
+                self.televisionSearchResults.removeAll();
+                for(var i = 0; i < mappedShows.length; i++) {
+                	self.televisionSearchResults.push(mappedShows[i]);
+                }
+				alert("Submitted to search!");
 			},
 			error: function() {
 				alert("Shit, something went wrong.");
