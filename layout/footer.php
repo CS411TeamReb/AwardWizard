@@ -1,8 +1,8 @@
 		</div>
 		<div id="push"></div>
-		<!--<footer>
+		<footer>
 			<p align="center">Made with <i class="fa fa-heart"></i> by Emily Chao, Brianna Ifft, Robin Sturm and Milan Dasgupta.</p>
-		</footer>-->
+		</footer>
 		<!--scripts-->
 		<script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 		<script src="bower_components/knockout/dist/knockout.js" type="text/javascript"></script>

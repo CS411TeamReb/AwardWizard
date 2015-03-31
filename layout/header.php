@@ -28,10 +28,10 @@
 				</div>
 				<div class="collapse navbar-collapse" id="mainNav">
 					<ul class="nav navbar-nav">
-						<li><a href="index.php">Home</a></li>
-						<li><a href="dashboard.php">Dashboard</a></li>
-						<li><a href="search.php">Search</a></li>
+						<li><a href="http://web.engr.illinois.edu/~bifft2/AwardWizard/">Home</a></li>
+						<li><a href="http://web.engr.illinois.edu/~bifft2/AwardWizard/insert.php">Insert</a></li>
 					</ul>
 				</div>
 			</div>
 		</nav>
+       
