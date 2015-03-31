@@ -1,1 +1,4 @@
-[26-Mar-2015 19:26:53 America/Chicago] PHP Warning:  sprintf(): Too few arguments in /home/rsturm2/public_html/AwardWizard/php/movieSearch.php on line 7
+[25-Mar-2015 17:23:53 America/Chicago] PHP Warning:  include(layout/header.php): failed to open stream: No such file or directory in /home/bifft2/public_html/AwardWizard/php/insert.php on line 2
+[25-Mar-2015 17:23:53 America/Chicago] PHP Warning:  include(): Failed opening 'layout/header.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/bifft2/public_html/AwardWizard/php/insert.php on line 2
+[25-Mar-2015 17:23:53 America/Chicago] PHP Warning:  include(layout/footer.php): failed to open stream: No such file or directory in /home/bifft2/public_html/AwardWizard/php/insert.php on line 6
+[25-Mar-2015 17:23:53 America/Chicago] PHP Warning:  include(): Failed opening 'layout/footer.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/bifft2/public_html/AwardWizard/php/insert.php on line 6
