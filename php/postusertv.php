@@ -1,7 +1,7 @@
 <?php
 	include_once 'connect.php';
 	$connection = connect();
-	mysql_select_db('bifft2_awardwiz');
+	mysql_select_db('awardwiz_main');
 
 	$userid = $_POST['userid'];
 	$usertvtitle = $_POST['usertvtitle'];
