@@ -68,13 +68,14 @@ var TestViewModel = function() {
                 self.ReleaseYear = ko.observable(releaseyear || "");
                 
         }
-        function Honor(awardname, nominated, person, show, year){
+        function Honor(awardname, nominated, person, show, year, workname){
         		var self=this;
         		self.AwardName = ko.observable(awardname||"");
         		self.Nominated = ko.observable(nominated||"");
         		self.Person = ko.observable(person||"");
         		self.Show = ko.observable(show||"");
         		self.Year = ko.observable(year||"");
+                        self.WorkName = ko.observable(workname||"");
     	}
         self.search = ko.observable();
 
@@ -95,7 +96,7 @@ var TestViewModel = function() {
 			success: function(shows) {
             	var showData = JSON.parse(shows);
             	var mappedShows = $.map(showData, function(item) {
-                	return new Honor(item.AwardName, item.NominatedWon, item.PersonName, item.ShowName, item.YearGiven);
+                	return new Honor(item.AwardName, item.NominatedWon, item.PersonName, item.ShowName, item.YearGiven, item.TitleName);
                 });
                 self.honorSearchResults.removeAll();
                 for(var i = 0; i < mappedShows.length; i++) {
