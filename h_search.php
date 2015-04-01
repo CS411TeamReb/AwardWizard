@@ -16,7 +16,6 @@
 				<td>Person</td>
 				<td>Award Show</td>
 				<td>Year Given</td>
-                                <td>Work Name</td>
 
 		</thead>
 </tr>
@@ -29,7 +28,6 @@
 				<td data-bind="text: Person"></td>
 				<td data-bind="text: Show"></td>
 				<td data-bind="text: Year"></td>
-                                <td data-bind="text: WorkName"></td>
 </tr>
 		</tbody>
 </table>
