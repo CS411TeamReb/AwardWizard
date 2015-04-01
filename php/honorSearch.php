@@ -4,7 +4,7 @@
 	mysql_select_db('rsturm2_awardtest');
 
 	$term = $_GET['search'];
-        $result = mysql_query("SELECT * FROM Honor WHERE AwardName LIKE '%$term%'");
+        $result = mysql_query("SELECT * FROM Honor JOIN Works ON Honor.WorkID = Works.WorkID WHERE AwardName LIKE '%$term%'");
 
 
 	if (!$result) {
