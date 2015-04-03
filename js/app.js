@@ -245,7 +245,7 @@ function Honor(id, name, year, nominatedWon, showName, workId, personName, workn
 			success: function(shows) {
             	var showData = JSON.parse(shows);
             	var mappedShows = $.map(showData, function(item) {
-                	return new Honor(item.AwardID, item.AwardName, item.YearGiven, item.NominatedWon, item.ShowName, item.WorkID, item.PersonName);
+                	return new Honor(item.AwardID, item.AwardName, item.YearGiven, item.NominatedWon, item.ShowName, item.WorkID, item.PersonName, item.TitleName);
                 });
                 self.honorSearchResults.removeAll();
                 for(var i = 0; i < mappedShows.length; i++) {
