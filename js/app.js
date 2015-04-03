@@ -15,15 +15,17 @@ var TestViewModel = function() {
 		self.VotingPanel = ko.observable(panel || "");
 	}
 
-	function Honor(awardname, nominated, person, show, year, workname){
-        		var self=this;
-        		self.AwardName = ko.observable(awardname||"");
-        		self.Nominated = ko.observable(nominated||"");
-        		self.Person = ko.observable(person||"");
-        		self.Show = ko.observable(show||"");
-        		self.Year = ko.observable(year||"");
-        		self.WorkName = ko.observable(workname||"");
-  	}
+function Honor(id, name, year, nominatedWon, showName, workId, personName, workname) {
+		var self = this;
+		self.AwardID = ko.observable(id || "");
+		self.AwardName = ko.observable(name || "");
+		self.YearGiven = ko.observable(year || 2015);
+		self.NominatedWon = ko.observable(nominatedWon || "");
+		self.ShowName = ko.observable(showName || "");
+		self.WorkID = ko.observable(workId || "");
+		self.PersonName = ko.observable(personName || "");
+		self.WorkName = ko.observable(workname || "");
+	}
 
 	function Movie(id, title, rating, boxOffice, budget, year) {
 		var self = this;
@@ -243,7 +245,7 @@ var TestViewModel = function() {
 			success: function(shows) {
             	var showData = JSON.parse(shows);
             	var mappedShows = $.map(showData, function(item) {
-                	return new Honor(item.AwardID, item.AwardName, item.YearGiven, item.NominatedWon, item.ShowName, item.WorkID, item.PersonName);
+                	return new Honor(item.AwardID, item.AwardName, item.YearGiven, item.NominatedWon, item.ShowName, item.WorkID, item.PersonName, item.TitleName);
                 });
                 self.honorSearchResults.removeAll();
                 for(var i = 0; i < mappedShows.length; i++) {
