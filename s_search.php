@@ -2,6 +2,10 @@
 	include 'layout/header.php';
 ?>
 <div class="btn-group" role="group" aria-label="...">
+<label type="text" data-bind="value: tableToSearch">Stage</label>
+<label for="columnsDropdown"><span data-bind="text: tableToSearch"></span> Attributes: </label>
+<select id="columnsDropdown" class="form-control" data-bind="options: columns, value: columnToSearch"></select>
+
 <label>Search Term:</label>
 <input type="text" data-bind="value: search"></input>
 <button data-bind="click: searchForS">Send</button>

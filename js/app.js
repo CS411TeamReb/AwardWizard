@@ -88,6 +88,11 @@ var TestViewModel = function() {
 		self.MinimumRuntime = ko.observable(minr || 0);
 		self.MaximumRuntime = ko.observable(maxr || 0);
 	}
+    function Result(category, percentage){
+        var self = this;
+        self.Category = ko.observable(category || "");
+        self.Percentage = ko.observable(percentage||0);
+    }
     
     /* Update */
     self.tableToUpdate = ko.observable("AwardShow");
@@ -230,14 +235,17 @@ var TestViewModel = function() {
 
 	/* Search */
     self.search = ko.observable();
+    self.table = ko.observable("Table");
+    self.column = ko.observable("Column");
 
-	self.awardShowSearchResults = ko.observableArray([new AwardShow()]);
+    self.awardShowSearchResults = ko.observableArray([new AwardShow()]);
     self.personSearchResults = ko.observableArray([new People()]);
     self.televisionSearchResults = ko.observableArray([new Television()]);
     self.stageSearchResults = ko.observableArray([new Stage()]);
     self.movieSearchResults = ko.observableArray([new Movie()]);
     self.musicSearchResults = ko.observableArray([new Music()]);
     self.honorSearchResults = ko.observableArray([new Honor()]);
+    self.breakdownResults = ko.observableArray([new Result()]);
 
 	self.searchForH = function() {
 		$.ajax({
@@ -396,6 +404,27 @@ var TestViewModel = function() {
 			},
 			error: function() {
 				alert("Shit, something went wrong.");
+			}
+		});
+	}
+	self.viewBreakdown = function(){
+		$.ajax({
+			url: "php/percentages.php",
+			type: "get",
+			data: "table="+encodeURIComponent(self.tableToSearch().toString())+"&column="+encodeURIComponent(self.columnToSearch().toString()),
+			cache: false,
+			success: function(shows){
+				var showData = JSON.parse(shows);
+				var mappedShows = $.map(showData, function(item){
+					return new Result(item[0], item[1]);
+				});
+				self.breakdownResults.removeAll();
+				for(var i =0;i<mappedShows.length; i++){
+					self.breakdownResults.push(mappedShows[i]);
+				}
+			},
+			error: function(){
+				alert("Something went wrong");
 			}
 		});
 	}
