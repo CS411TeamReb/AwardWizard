@@ -5,6 +5,7 @@ $(document).ready(function() {
 var TestViewModel = function() {
 	var self = this;
 
+	/* Table objects */
 	function AwardShow(name, description, year, type, criteria, panel) {
 		var self = this;
 		self.ShowName = ko.observable(name || "");
@@ -15,7 +16,7 @@ var TestViewModel = function() {
 		self.VotingPanel = ko.observable(panel || "");
 	}
 
-function Honor(id, name, year, nominatedWon, showName, workId, personName, workname) {
+	function Honor(id, name, year, nominatedWon, showName, workId, personName, workname) {
 		var self = this;
 		self.AwardID = ko.observable(id || "");
 		self.AwardName = ko.observable(name || "");
@@ -88,6 +89,7 @@ function Honor(id, name, year, nominatedWon, showName, workId, personName, workn
 		self.MaximumRuntime = ko.observable(maxr || 0);
 	}
     
+    /* Update */
     self.tableToUpdate = ko.observable("AwardShow");
 	self.availableTables = ko.observableArray(["AwardShow", "Honor", "Movies", "Music", "People", "Stage", "Television"]);
 
@@ -226,6 +228,7 @@ function Honor(id, name, year, nominatedWon, showName, workId, personName, workn
 		});
 	}
 
+	/* Search */
     self.search = ko.observable();
 
 	self.awardShowSearchResults = ko.observableArray([new AwardShow()]);
@@ -397,13 +400,14 @@ function Honor(id, name, year, nominatedWon, showName, workId, personName, workn
 		});
 	}
 
+	/* User Insert */
 	self.userid = ko.observable("");
-		self.userpersonname = ko.observable("");
-        self.usermusictitle = ko.observable("");
-        self.usermusicartist = ko.observable("");
-        self.usertvtitle = ko.observable("");
-        self.usermovietitle = ko.observable("");
-        self.userstagetitle = ko.observable("");
+	self.userpersonname = ko.observable("");
+    self.usermusictitle = ko.observable("");
+    self.usermusicartist = ko.observable("");
+    self.usertvtitle = ko.observable("");
+    self.usermovietitle = ko.observable("");
+    self.userstagetitle = ko.observable("");
 
 	self.postuserPersonToDB = function() {
 		$.ajax({
@@ -420,7 +424,7 @@ function Honor(id, name, year, nominatedWon, showName, workId, personName, workn
 		});
 	}
 
-        self.postuserMusicToDB = function() {
+    self.postuserMusicToDB = function() {
 		$.ajax({
 			url: "php/postusermusic.php",
 			type: "post",
@@ -435,7 +439,7 @@ function Honor(id, name, year, nominatedWon, showName, workId, personName, workn
 		});
 	}
 
-        self.postuserTVToDB = function() {
+    self.postuserTVToDB = function() {
 		$.ajax({
 			url: "php/postusertv.php",
 			type: "post",
@@ -450,7 +454,7 @@ function Honor(id, name, year, nominatedWon, showName, workId, personName, workn
 		});
 	}
 
-        self.postuserMovieToDB = function() {
+    self.postuserMovieToDB = function() {
 		$.ajax({
 			url: "php/postusermovie.php",
 			type: "post",
@@ -465,7 +469,7 @@ function Honor(id, name, year, nominatedWon, showName, workId, personName, workn
 		});
 	}
 
-        self.postuserStageToDB = function() {
+    self.postuserStageToDB = function() {
 		$.ajax({
 			url: "php/postuserstage.php",
 			type: "post",
@@ -480,4 +484,21 @@ function Honor(id, name, year, nominatedWon, showName, workId, personName, workn
 		});
 	}
 
+	/* Advanced Search Column Dropdown */
+	self.tableToSearch = ko.observable("AwardShow");
+	self.columns = ko.observableArray([]);
+	self.columnToSearch = ko.observableArray("");
+
+	function refreshColumns(newValue) {
+		$.getJSON("php/getColumns.php", { "table": newValue }, function(columns) {
+			var mappedValues = $.map(columns, function(item) {
+				return item.Field;
+			});
+			self.columns(mappedValues);
+		});
+	}
+
+	self.tableToSearch.subscribe(function(newValue) {
+		refreshColumns(newValue);
+	});
 };
