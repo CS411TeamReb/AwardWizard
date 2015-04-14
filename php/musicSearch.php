@@ -4,7 +4,8 @@
 	mysql_select_db('awardwiz_main');
 
 	$term = $_GET['search'];
-        $result = mysql_query("SELECT * FROM Music WHERE Title LIKE '%$term%'");
+	$column = $_GET['column'];
+        $result = mysql_query(sprintf("SELECT * FROM Music WHERE %s LIKE '%%%s%%'", $column, $term));
 
 
 	if (!$result) {

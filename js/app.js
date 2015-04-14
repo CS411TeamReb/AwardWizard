@@ -239,11 +239,33 @@ var TestViewModel = function() {
     self.musicSearchResults = ko.observableArray([new Music()]);
     self.honorSearchResults = ko.observableArray([new Honor()]);
 
+    self.columns = ko.observableArray([]);
+	self.columnToSearch = ko.observableArray("");
+	self.tableToSearch = ko.observable("AwardShow");
+
+	self.tableToSearch.changeto = function(newValue) {
+		self.tableToSearch(newValue);
+		self.columns.removeAll();
+		self.refreshColumns(newValue);
+	};
+
+	self.refreshColumns = function(newValue) {
+		$.getJSON("php/getColumns.php", { "table": newValue }, function(columns) {
+			var mappedValues = $.map(columns, function(item) {
+				return item.Field;
+			});
+			for(var i = 0; i < mappedValues.length; i++) {
+				if (mappedValues[i].indexOf("ID") == -1)
+                	self.columns.push(mappedValues[i]);
+            }
+		});
+	};
+
 	self.searchForH = function() {
 		$.ajax({
 			url: "php/honorSearch.php",
 			type: "get",
-			data: "search=" + encodeURIComponent(self.search().toString()),
+			data: "search=" + encodeURIComponent(self.search().toString()) + "&column=" + encodeURIComponent(self.columnToSearch().toString()),
 			cache: false,
 			success: function(shows) {
             	var showData = JSON.parse(shows);
@@ -266,7 +288,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/musicSearch.php",
 			type: "get",
-			data: "search=" + encodeURIComponent(self.search().toString()),
+			data: "search=" + encodeURIComponent(self.search().toString()) + "&column=" + encodeURIComponent(self.columnToSearch().toString()),
 			cache: false,
 			success: function(shows) {
             	var showData = JSON.parse(shows);
@@ -289,7 +311,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/movieSearch.php",
 			type: "get",
-			data: "search=" + encodeURIComponent(self.search().toString()),
+			data: "search=" + encodeURIComponent(self.search().toString()) + "&column=" + encodeURIComponent(self.columnToSearch().toString()),
 			cache: false,
 			success: function(shows) {
             	var showData = JSON.parse(shows);
@@ -312,7 +334,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/stageSearch.php",
 			type: "get",
-			data: "search=" + encodeURIComponent(self.search().toString()),
+			data: "search=" + encodeURIComponent(self.search().toString()) + "&column=" + encodeURIComponent(self.columnToSearch().toString()),
 			cache: false,
 			success: function(shows) {
             	var showData = JSON.parse(shows);
@@ -335,7 +357,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/awardShowSearch.php",
 			type: "get",
-			data: "search=" + encodeURIComponent(self.search().toString()),
+			data: "search=" + encodeURIComponent(self.search().toString()) + "&column=" + encodeURIComponent(self.columnToSearch().toString()),
 			cache: false,
 			success: function(shows) {
             	var showData = JSON.parse(shows);
@@ -358,7 +380,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/personSearch.php",
 			type: "get",
-			data: "search=" + encodeURIComponent(self.search().toString()),
+			data: "search=" + encodeURIComponent(self.search().toString()) + "&column=" + encodeURIComponent(self.columnToSearch().toString()),
 			cache: false,
 			success: function(shows) {
             	var showData = JSON.parse(shows);
@@ -381,7 +403,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/tvSearch.php",
 			type: "get",
-			data: "search=" + encodeURIComponent(self.search().toString()),
+			data: "search=" + encodeURIComponent(self.search().toString()) + "&column=" + encodeURIComponent(self.columnToSearch().toString()),
 			cache: false,
 			success: function(shows) {
             	var showData = JSON.parse(shows);
@@ -400,6 +422,30 @@ var TestViewModel = function() {
 		});
 	}
 
+	self.searchTable = function() {
+		if (self.tableToSearch() === "AwardShow") {
+			self.searchForAS();
+		}
+		else if (self.tableToSearch() === "Honor") {
+			self.searchForH();
+		}
+		else if (self.tableToSearch() === "Movies") {
+			self.searchForMV();
+		}
+		else if (self.tableToSearch() === "Music") {
+			self.searchForMU();
+		}
+		else if (self.tableToSearch() === "People") {
+			self.searchForP();
+		}
+		else if (self.tableToSearch() === "Stage") {
+			self.searchForS();
+		}
+		else if (self.tableToSearch() === "Television") {
+			self.searchForTV();
+		}
+	}
+
 	/* User Insert */
 	self.userid = ko.observable("");
 	self.userpersonname = ko.observable("");
@@ -413,7 +459,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/postuserperson.php",
 			type: "post",
-			data: "userid=" + parseInt(self.userid()) + "&userpersonname=" + encodeURIComponent(self.userpersonname().toString()) ,
+			data: "userid=" + parseInt(self.userid()) + "&userpersonname=" + encodeURIComponent(self.userpersonname().toString()),
 			cache: false,
 			success: function() {
 				alert("Your data was successfully submitted!");
@@ -483,22 +529,4 @@ var TestViewModel = function() {
 			}
 		});
 	}
-
-	/* Advanced Search Column Dropdown */
-	self.tableToSearch = ko.observable("AwardShow");
-	self.columns = ko.observableArray([]);
-	self.columnToSearch = ko.observableArray("");
-
-	function refreshColumns(newValue) {
-		$.getJSON("php/getColumns.php", { "table": newValue }, function(columns) {
-			var mappedValues = $.map(columns, function(item) {
-				return item.Field;
-			});
-			self.columns(mappedValues);
-		});
-	}
-
-	self.tableToSearch.subscribe(function(newValue) {
-		refreshColumns(newValue);
-	});
 };

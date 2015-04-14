@@ -1,5 +1,8 @@
 .main {
 	margin-top: 60px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 80%;
 }
 
 .btn-group { 
@@ -8,4 +11,14 @@
 
 .input-group { 
 	top: 60px 
+}
+
+.searchTerm {
+	width: 25%;
+	display: inline !important;
+}
+
+.dropdownOptions {
+	width: 25%;
+	display: inline !important;
 }
