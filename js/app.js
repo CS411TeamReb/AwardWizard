@@ -256,6 +256,11 @@ var TestViewModel = function() {
 		self.refreshColumns(newValue);
 	};
 
+	self.tableToSearch.subscribe(function(newValue) {
+		self.columns.removeAll();
+		self.refreshColumns(newValue);
+	});
+
 	self.refreshColumns = function(newValue) {
 		$.getJSON("php/getColumns.php", { "table": newValue }, function(columns) {
 			var mappedValues = $.map(columns, function(item) {

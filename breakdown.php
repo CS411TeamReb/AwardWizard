@@ -1,19 +1,19 @@
 <?php
 	include 'layout/header.php';
 ?>
+<div class="main">
 <div class="btn-group" role="group" aria-label="...">
-<label>Breakdown: </label>
-	<label for="tableDropdown">Choose Table: </label>
-	<select id="tableDropdown" class="form-control" data-bind="options: availableTables, value: tableToSearch"></select>
-	
-	<label for="columnsDropdown"><span data-bind="text: tableToSearch"></span> Attributes: </label>
-	<select id="columnsDropdown" class="form-control" data-bind="options: columns, value: columnToSearch"></select>
-
-<button data-bind="click: viewBreakdown">Send</button>
+<p><b>Breakdown: </b></p>
+<label for="tableDropdown">Choose Table: </label>
+<select id="tableDropdown" class="form-control" data-bind="options: availableTables, value: tableToSearch"></select>
+<label><span data-bind="text: tableToSearch"></span> Attributes: </label>
+<select class="form-control dropdownOptions" data-bind="options: columns, value: columnToSearch"></select>
+<br/>
+<button class="btn btn-default" data-bind="click: viewBreakdown">Send</button>
 </div>
 <br/>
 <div class="btn-group" role="group" aria-label="...">
-<table>
+<table class="table">
 	<thead>
 		<tr>
 			<td>Category</td>
@@ -29,7 +29,7 @@
 	</tbody>
 </table>
 </div>
-<br/>
+</div>
 <?php
 	include 'layout/footer.php';
 ?>
