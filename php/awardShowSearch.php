@@ -4,7 +4,8 @@
 	mysql_select_db('awardwiz_main');
 	
 	$term = $_GET['search'];
-        $result = mysql_query("SELECT * FROM AwardShow WHERE ShowName LIKE '%$term%'");
+	$column = $_GET['column'];
+    $result = mysql_query(sprintf("SELECT * FROM AwardShow WHERE %s LIKE '%%%s%%'", $column, $term));
 
 	if (!$result) {
 		die('Could not query:' . mysql_error());
@@ -15,7 +16,7 @@
 		$resultArray[] = $row;
 	}
 	$shows = $resultArray;
-        mysql_close($connection);
+    mysql_close($connection);
 
 	echo json_encode($shows);
 

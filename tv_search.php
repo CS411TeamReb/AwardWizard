@@ -2,31 +2,29 @@
 	include 'layout/header.php';
 ?>
 <div class="btn-group" role="group" aria-label="...">
-<label>Search Term:</label>
-<input type="text" data-bind="value: search"></input>
-<button data-bind="click: searchForTV">Send</button>
+	<label>Search Term:</label>
+	<input class="form-control" type="text" data-bind="value: search"></input>
+	<select class="form-control" data-bind="options: columns, value: columnToSearch"></select>
+	<button class="btn btn-default" data-bind="click: searchForTV">Search</button>
 </div>
 </br>
 <div class="btn-group" role="group" aria-label="...">
-<table>
-<tr>
+	<table>
+		<tr>
 		<thead>
-				<td>Title</td>
-				<td>Episodes</td>
-				<td>Seasons</td>
-				<td>Still Running</td>
-				<td>Network</td>
-				<td>Camera Set-up</td>
-				<td>Minimum Runtime</td>
-				<td>Maximum Runtime</td>
-
-
+			<td>Title</td>
+			<td>Episodes</td>
+			<td>Seasons</td>
+			<td>Still Running</td>
+			<td>Network</td>
+			<td>Camera Set-up</td>
+			<td>Minimum Runtime</td>
+			<td>Maximum Runtime</td>
 		</thead>
-</tr>
-</br>
-
+		</tr>
+		<br/>
 		<tbody data-bind="foreach: televisionSearchResults ">
-<tr>
+			<tr>
 				<td data-bind="text: Title"></td>
 				<td data-bind="text: Episodes"></td>
 				<td data-bind="text: Seasons"></td>
@@ -35,13 +33,11 @@
 				<td data-bind="text: CameraSetup"></td>
 				<td data-bind="text: MinimumRuntime"></td>
 				<td data-bind="text: MaximumRuntime"></td>
-
-
-</tr>
+			</tr>
 		</tbody>
-</table>
+	</table>
 </div>
-</br>
+<br/>
 <?php
 	include 'layout/footer.php';
 ?>

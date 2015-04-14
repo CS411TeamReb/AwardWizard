@@ -3,7 +3,8 @@
 	$connection = connect();
 	mysql_select_db('awardwiz_main');
 	$term = $_GET['search'];
-    $result = mysql_query("SELECT * FROM Honor JOIN Works ON Honor.WorkID = Works.WorkID WHERE AwardName LIKE '%$term%'");
+	$column = $_GET['column'];
+    $result = mysql_query(sprintf("SELECT * FROM Honor JOIN Works ON Honor.WorkID = Works.WorkID WHERE %s LIKE '%%%s%%'", $column, $term));
 	if (!$result) {
 		die('Could not query:' . mysql_error());
 	}
