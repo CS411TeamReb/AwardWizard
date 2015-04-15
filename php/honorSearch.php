@@ -4,7 +4,13 @@
 	mysql_select_db('awardwiz_main');
 	$term = $_GET['search'];
 	$column = $_GET['column'];
-    $result = mysql_query(sprintf("SELECT * FROM Honor JOIN Works ON Honor.WorkID = Works.WorkID WHERE %s LIKE '%%%s%%'", $column, $term));
+    if (is_numeric($term)) {
+    	$result = mysql_query(sprintf("SELECT * FROM Honor JOIN Works ON Honor.WorkID = Works.WorkID WHERE %s = %d OR (%s - 10 < %d AND %s + 10 > %d) ORDER BY %s DESC", $column, $term, $column, $term, $column, $term, $column));
+    }
+    else {
+    	$result = mysql_query(sprintf("SELECT * FROM Honor JOIN Works ON Honor.WorkID = Works.WorkID WHERE %s LIKE '%%%s%%'", $column, $term));
+    }
+    
 	if (!$result) {
 		die('Could not query:' . mysql_error());
 	}
