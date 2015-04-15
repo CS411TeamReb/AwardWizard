@@ -4,7 +4,7 @@
 	mysql_select_db('awardwiz_main');
 	
 	$table = $_GET['table'];
-	if (strcmp($table, "Honor")) {
+	if (strcmp($table, "Honor") == 0) {
 		$result = mysql_query(sprintf("SELECT * FROM Honor JOIN Works ON Honor.WorkID = Works.WorkID"));
 	}
 	else {
