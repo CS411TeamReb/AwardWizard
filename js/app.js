@@ -16,7 +16,7 @@ var TestViewModel = function() {
 		self.VotingPanel = ko.observable(panel || "");
 	}
 
-	function Honor(id, name, year, nominatedWon, showName, workId, personName, workName) {
+	function Honor(id, name, year, nominatedWon, showName, workId, personName, titleName) {
 		var self = this;
 		self.AwardID = ko.observable(id || "");
 		self.AwardName = ko.observable(name || "");
@@ -25,7 +25,7 @@ var TestViewModel = function() {
 		self.ShowName = ko.observable(showName || "");
 		self.WorkID = ko.observable(workId || "");
 		self.PersonName = ko.observable(personName || "");
-		self.WorkName = ko.observable(workname || "");
+		self.TitleName = ko.observable(titleName || "");
 	}
 
 	function Movie(id, title, rating, boxOffice, budget, year) {
