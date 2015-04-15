@@ -480,12 +480,12 @@ var TestViewModel = function() {
 	/* User Insert */
 	self.userid = ko.observable("");
 	self.userpersonname = ko.observable("");
-    self.usermusictitle = ko.observable("");
-    self.usermusicartist = ko.observable("");
-    self.usertvtitle = ko.observable("");
-    self.usermovietitle = ko.observable("");
-    self.userstagetitle = ko.observable("");
-    self.adminpersonname = ko.observable("");
+        self.usermusictitle = ko.observable("");
+        self.usermusicartist = ko.observable("");
+        self.usertvtitle = ko.observable("");
+        self.usermovietitle = ko.observable("");
+        self.userstagetitle = ko.observable("");
+        self.adminpersonname = ko.observable("");
         self.adminpersonorigin = ko.observable("");
         self.adminpersonoccupation = ko.observable("");
         self.adminpersongender = ko.observable("");
@@ -506,6 +506,7 @@ var TestViewModel = function() {
         self.admintvmaxruntime = ko.observable("");
         self.admintvplacefilmed = ko.observable("");
         self.admintvficlocation = ko.observable("");
+        self.admintvgenre = ko.observable("");
         self.adminmovietitle = ko.observable("");
         self.adminmovierating = ko.observable("");
         self.adminmovieboxoffice = ko.observable("");
@@ -513,6 +514,7 @@ var TestViewModel = function() {
         self.adminmovieyearnom = ko.observable("");
         self.adminmovieplacefilmed = ko.observable("");
         self.adminmovieficlocation = ko.observable("");
+        self.adminmoviegenre = ko.observable("");
         self.adminstagetitle = ko.observable("");
         self.adminstagesetting = ko.observable("");
         self.adminstageiteration = ko.observable("");
@@ -528,6 +530,29 @@ var TestViewModel = function() {
         self.adminstagerunning = ko.observable("");
         self.adminstageplacefilmed = ko.observable("");
         self.adminstageficlocation = ko.observable("");
+        
+        
+        self.adminhonorshowname = ko.observable("");
+        self.adminhonorawardname = ko.observable("");
+        self.adminhonorworkname = ko.observable("");
+        self.adminhonorpersonname = ko.observable("");
+        self.adminhonoryeargiven = ko.observable("");
+        self.adminhonornomorwon = ko.observable("");
+        
+        
+       	self.admintvplacefilmedlat = ko.observable("");
+       	self.admintvplacefilmedlong = ko.observable("");
+       	self.admintvficlocationlat = ko.observable("");
+       	self.admintvficlocationlong = ko.observable("");
+       	self.adminmovieplacefilmedlat = ko.observable("");
+       	self.adminmovieplacefilmedlong = ko.observable("");
+       	self.adminmovieficlocationlat = ko.observable("");
+       	self.adminmovieficlocationlong = ko.observable("");
+       	self.adminstageplacefilmedlat = ko.observable("");
+       	self.adminstageplacefilmedlong = ko.observable("");
+       	self.adminstageficlocationlat = ko.observable("");
+       	self.adminstageficlocationlong = ko.observable("");
+
 
 	self.postuserPersonToDB = function() {
 		$.ajax({
@@ -646,7 +671,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/postadmintv.php",
 			type: "post",
-			data: "admintvtitle=" + encodeURIComponent(self.admintvtitle().toString()) + "&admintvnumepisodes=" + parseInt(self.admintvnumepisodes()) + "&admintvnumseasons=" + parseInt(self.admintvnumseasons()) + "&admintvstillrunning=" + encodeURIComponent(self.admintvstillrunning().toString()) + "&admintvnetwork=" + encodeURIComponent(self.admintvnetwork().toString()) + "&admintvcamerasetup=" + encodeURIComponent(self.admintvcamerasetup().toString()) + "&admintvminruntime=" + parseInt(self.admintvminruntime()) + "&admintvmaxruntime=" + parseInt(self.admintvmaxruntime()) + "&admintvplacefilmed=" + encodeURIComponent(self.admintvplacefilmed().toString()) + "&admintvficlocation=" + encodeURIComponent(self.admintvficlocation().toString()) + "&admintvplacefilmed=" + encodeURIComponent(self.admintvplacefilmed().toString()) + "&admintvficlocation=" + encodeURIComponent(self.admintvficlocation().toString()),
+			data: "admintvtitle=" + encodeURIComponent(self.admintvtitle().toString()) + "&admintvgenre=" + encodeURIComponent(self.admintvgenre().toString()) + "&admintvnumepisodes=" + parseInt(self.admintvnumepisodes()) + "&admintvnumseasons=" + parseInt(self.admintvnumseasons()) + "&admintvstillrunning=" + encodeURIComponent(self.admintvstillrunning().toString()) + "&admintvnetwork=" + encodeURIComponent(self.admintvnetwork().toString()) + "&admintvcamerasetup=" + encodeURIComponent(self.admintvcamerasetup().toString()) + "&admintvminruntime=" + parseInt(self.admintvminruntime()) + "&admintvmaxruntime=" + parseInt(self.admintvmaxruntime()) + "&admintvplacefilmed=" + encodeURIComponent(self.admintvplacefilmed().toString()) + "&admintvficlocation=" + encodeURIComponent(self.admintvficlocation().toString()) + "&admintvplacefilmed=" + encodeURIComponent(self.admintvplacefilmed().toString()) + "&admintvficlocation=" + encodeURIComponent(self.admintvficlocation().toString()),
 			cache: false,
 			success: function() {
 				alert("Your data was successfully submitted!");
@@ -661,7 +686,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/postadminmovie.php",
 			type: "post",
-			data: "adminmovietitle=" + encodeURIComponent(self.adminmovietitle().toString()) + "&adminmovierating=" + encodeURIComponent(self.adminmovierating().toString()) + "&adminmovieboxoffice=" + parseFloat(self.adminmovieboxoffice()) + "&adminmoviebudget=" + parseFloat(self.adminmoviebudget()) + "&adminmovieyearnom=" + parseInt(self.adminmovieyearnom()) + "&adminmovieplacefilmed=" + encodeURIComponent(self.adminmovieplacefilmed().toString()) + "&adminmovieficlocation=" + encodeURIComponent(self.adminmovieficlocation().toString()),
+			data: "adminmovietitle=" + encodeURIComponent(self.adminmovietitle().toString()) + "&adminmoviegenre=" + encodeURIComponent(self.adminmoviegenre().toString()) + "&adminmovierating=" + encodeURIComponent(self.adminmovierating().toString()) + "&adminmovieboxoffice=" + parseFloat(self.adminmovieboxoffice()) + "&adminmoviebudget=" + parseFloat(self.adminmoviebudget()) + "&adminmovieyearnom=" + parseInt(self.adminmovieyearnom()) + "&adminmovieplacefilmed=" + encodeURIComponent(self.adminmovieplacefilmed().toString()) + "&adminmovieficlocation=" + encodeURIComponent(self.adminmovieficlocation().toString()),
 			cache: false,
 			success: function() {
 				alert("Your data was successfully submitted!");
@@ -677,6 +702,21 @@ var TestViewModel = function() {
 			url: "php/postadminstage.php",
 			type: "post",
 			data: "adminstagetitle=" + encodeURIComponent(self.adminstagetitle().toString()) + "&adminstagesetting=" + encodeURIComponent(self.adminstagesetting().toString()) + "&adminstageiteration=" + parseInt(self.adminstageiteration()) + "&adminstagetype=" + encodeURIComponent(self.adminstagetype().toString()) + "&adminstagegenre=" + encodeURIComponent(self.adminstagegenre().toString()) + "&adminstagesongnum=" + parseInt(self.adminstagesongnum()) + "&adminstageyear=" + parseInt(self.adminstageyear()) + "&adminstagetheatre=" + encodeURIComponent(self.adminstagetheatre().toString()) + "&adminstagedateopened=" + encodeURIComponent(self.adminstagedateopened().toString()) + "&adminstagedateclosed=" + encodeURIComponent(self.adminstagedateclosed().toString()) + "&adminstagenumpreviews=" + parseInt(self.adminstagenumpreviews()) + "&adminstagenumperformances=" + parseInt(self.adminstagenumperformances()) + "&adminstagerunning=" + encodeURIComponent(self.adminstagerunning().toString()) + "&adminstageplacefilmed=" + encodeURIComponent(self.adminstageplacefilmed().toString()) + "&adminstageficlocation=" + encodeURIComponent(self.adminstageficlocation().toString()),
+			cache: false,
+			success: function() {
+				alert("Your data was successfully submitted!");
+			},
+			error: function() {
+				alert("Shit, something went wrong.");
+			}
+		});
+	}
+	
+	self.postadminHonorToDB = function() {
+		$.ajax({
+			url: "php/postadminhonor.php",
+			type: "post",
+			data: "adminhonorshowname=" + encodeURIComponent(self.adminhonorshowname().toString()) + "&adminhonorawardname=" + encodeURIComponent(self.adminhonorawardname().toString()) + "&adminhonorworkname=" + encodeURIComponent(self.adminhonorworkname().toString()) + "&adminhonorpersonname=" + encodeURIComponent(self.adminhonorpersonname().toString()) + "&adminhonoryeargiven=" + parseInt(self.adminhonoryeargiven()) + "&adminhonornomorwon=" + encodeURIComponent(self.adminhonornomorwon().toString()),
 			cache: false,
 			success: function() {
 				alert("Your data was successfully submitted!");
