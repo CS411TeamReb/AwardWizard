@@ -16,7 +16,7 @@ var TestViewModel = function() {
 		self.VotingPanel = ko.observable(panel || "");
 	}
 
-	function Honor(id, name, year, nominatedWon, showName, workId, personName, workname) {
+	function Honor(id, name, year, nominatedWon, showName, workId, personName, workName) {
 		var self = this;
 		self.AwardID = ko.observable(id || "");
 		self.AwardName = ko.observable(name || "");
@@ -124,7 +124,7 @@ var TestViewModel = function() {
 				}
 				else if (newValue === "Honor") {
 					var mappedHonors = $.map(jsonData, function(item) {
-						return new Honor(item.AwardName, item.NominatedWon, item.PersonName, item.ShowName, item.YearGiven, item.TitleName);
+						return new Honor(item.AwardID, item.AwardName, item.YearGiven, item.NominatedWon, item.ShowName, item.WorkID, item.PersonName, item.TitleName);
 					});
 					self.updateHonorData.removeAll();
 					self.updateHonorData(mappedHonors);
