@@ -250,28 +250,25 @@ var TestViewModel = function() {
 	self.columnToSearch = ko.observableArray("");
 	self.tableToSearch = ko.observable("AwardShow");
 
+	function refreshColumns(newValue) {
+		self.columns.removeAll();
+		self.columnToSearch("");
+		$.getJSON("php/getColumns.php", { "table": newValue }, function(columns) {
+			var mappedValues = $.map(columns, function(item) {
+				if (item.Field.indexOf("ID") == -1)
+					return item.Field;
+			});
+			self.columns(mappedValues);
+		});
+	};
+
 	self.tableToSearch.changeto = function(newValue) {
 		self.tableToSearch(newValue);
-		self.columns.removeAll();
-		self.refreshColumns(newValue);
 	};
 
 	self.tableToSearch.subscribe(function(newValue) {
-		self.columns.removeAll();
-		self.refreshColumns(newValue);
+		refreshColumns(newValue);
 	});
-
-	self.refreshColumns = function(newValue) {
-		$.getJSON("php/getColumns.php", { "table": newValue }, function(columns) {
-			var mappedValues = $.map(columns, function(item) {
-				return item.Field;
-			});
-			for(var i = 0; i < mappedValues.length; i++) {
-				if (mappedValues[i].indexOf("ID") == -1)
-                	self.columns.push(mappedValues[i]);
-            }
-		});
-	};
 
 	self.searchForH = function() {
 		$.ajax({
