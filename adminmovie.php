@@ -10,6 +10,11 @@
 </tr>
 <tr>
 <td><div class="input-group">
+  <input type="text" class="form-control" placeholder="Genre" aria-describedby="basic-addon1" data-bind="value: adminmoviegenre">
+</div></td>
+</tr>
+<tr>
+<td><div class="input-group">
   <input type="text" class="form-control" placeholder="Rating" aria-describedby="basic-addon1" data-bind="value: adminmovierating">
 </div></td>
 </tr>
