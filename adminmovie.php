@@ -51,7 +51,6 @@
 </tr>
 </table>
 
-
 <?php
 	include 'layout/footer.php'
 ?>

@@ -1,7 +1,6 @@
 <?php
 	include 'layout/header.php'
 ?>
-
 <table>
 <tr>
 <td><div class="input-group">
@@ -85,6 +84,7 @@
 </div></td>
 </tr>
 </table>
+
 
 
 <?php

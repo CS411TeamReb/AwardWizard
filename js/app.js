@@ -16,7 +16,7 @@ var TestViewModel = function() {
 		self.VotingPanel = ko.observable(panel || "");
 	}
 
-	function Honor(id, name, year, nominatedWon, showName, workId, personName, workname) {
+	function Honor(id, name, year, nominatedWon, showName, workId, personName, titleName) {
 		var self = this;
 		self.AwardID = ko.observable(id || "");
 		self.AwardName = ko.observable(name || "");
@@ -25,7 +25,7 @@ var TestViewModel = function() {
 		self.ShowName = ko.observable(showName || "");
 		self.WorkID = ko.observable(workId || "");
 		self.PersonName = ko.observable(personName || "");
-		self.WorkName = ko.observable(workname || "");
+		self.TitleName = ko.observable(titleName || "");
 	}
 
 	function Movie(id, title, rating, boxOffice, budget, year) {
@@ -124,7 +124,7 @@ var TestViewModel = function() {
 				}
 				else if (newValue === "Honor") {
 					var mappedHonors = $.map(jsonData, function(item) {
-						return new Honor(item.AwardName, item.NominatedWon, item.PersonName, item.ShowName, item.YearGiven, item.TitleName);
+						return new Honor(item.AwardID, item.AwardName, item.YearGiven, item.NominatedWon, item.ShowName, item.WorkID, item.PersonName, item.TitleName);
 					});
 					self.updateHonorData.removeAll();
 					self.updateHonorData(mappedHonors);
@@ -250,28 +250,25 @@ var TestViewModel = function() {
 	self.columnToSearch = ko.observableArray("");
 	self.tableToSearch = ko.observable("AwardShow");
 
+	function refreshColumns(newValue) {
+		self.columns.removeAll();
+		self.columnToSearch("");
+		$.getJSON("php/getColumns.php", { "table": newValue }, function(columns) {
+			var mappedValues = $.map(columns, function(item) {
+				if (item.Field.indexOf("ID") == -1)
+					return item.Field;
+			});
+			self.columns(mappedValues);
+		});
+	};
+
 	self.tableToSearch.changeto = function(newValue) {
 		self.tableToSearch(newValue);
-		self.columns.removeAll();
-		self.refreshColumns(newValue);
 	};
 
 	self.tableToSearch.subscribe(function(newValue) {
-		self.columns.removeAll();
-		self.refreshColumns(newValue);
+		refreshColumns(newValue);
 	});
-
-	self.refreshColumns = function(newValue) {
-		$.getJSON("php/getColumns.php", { "table": newValue }, function(columns) {
-			var mappedValues = $.map(columns, function(item) {
-				return item.Field;
-			});
-			for(var i = 0; i < mappedValues.length; i++) {
-				if (mappedValues[i].indexOf("ID") == -1)
-                	self.columns.push(mappedValues[i]);
-            }
-		});
-	};
 
 	self.searchForH = function() {
 		$.ajax({
@@ -731,6 +728,6 @@ var TestViewModel = function() {
 		});
 	}
 
-};
 
+};
 
