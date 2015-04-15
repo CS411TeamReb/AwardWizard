@@ -5,6 +5,7 @@ $(document).ready(function() {
 var TestViewModel = function() {
 	var self = this;
 
+	/* Table objects */
 	function AwardShow(name, description, year, type, criteria, panel) {
 		var self = this;
 		self.ShowName = ko.observable(name || "");
@@ -15,7 +16,7 @@ var TestViewModel = function() {
 		self.VotingPanel = ko.observable(panel || "");
 	}
 
-	function Honor(id, name, year, nominatedWon, showName, workId, personName) {
+	function Honor(id, name, year, nominatedWon, showName, workId, personName, workname) {
 		var self = this;
 		self.AwardID = ko.observable(id || "");
 		self.AwardName = ko.observable(name || "");
@@ -24,6 +25,7 @@ var TestViewModel = function() {
 		self.ShowName = ko.observable(showName || "");
 		self.WorkID = ko.observable(workId || "");
 		self.PersonName = ko.observable(personName || "");
+		self.WorkName = ko.observable(workname || "");
 	}
 
 	function Movie(id, title, rating, boxOffice, budget, year) {
@@ -86,7 +88,14 @@ var TestViewModel = function() {
 		self.MinimumRuntime = ko.observable(minr || 0);
 		self.MaximumRuntime = ko.observable(maxr || 0);
 	}
+
+	function Result(category, percentage){
+        var self = this;
+        self.Category = ko.observable(category || "");
+        self.Percentage = ko.observable(percentage||0);
+    }
     
+    /* Update */
     self.tableToUpdate = ko.observable("AwardShow");
 	self.availableTables = ko.observableArray(["AwardShow", "Honor", "Movies", "Music", "People", "Stage", "Television"]);
 
@@ -115,7 +124,7 @@ var TestViewModel = function() {
 				}
 				else if (newValue === "Honor") {
 					var mappedHonors = $.map(jsonData, function(item) {
-						return new Honor(item.AwardID, item.AwardName, item.YearGiven, item.NominatedWon, item.ShowName, item.WorkID, item.PersonName);
+						return new Honor(item.AwardName, item.NominatedWon, item.PersonName, item.ShowName, item.YearGiven, item.TitleName);
 					});
 					self.updateHonorData.removeAll();
 					self.updateHonorData(mappedHonors);
@@ -225,6 +234,7 @@ var TestViewModel = function() {
 		});
 	}
 
+	/* Search */
     self.search = ko.observable();
 
 	self.awardShowSearchResults = ko.observableArray([new AwardShow()]);
@@ -234,17 +244,45 @@ var TestViewModel = function() {
     self.movieSearchResults = ko.observableArray([new Movie()]);
     self.musicSearchResults = ko.observableArray([new Music()]);
     self.honorSearchResults = ko.observableArray([new Honor()]);
+    self.breakdownResults = ko.observableArray([new Result()]);
+
+    self.columns = ko.observableArray([]);
+	self.columnToSearch = ko.observableArray("");
+	self.tableToSearch = ko.observable("AwardShow");
+
+	self.tableToSearch.changeto = function(newValue) {
+		self.tableToSearch(newValue);
+		self.columns.removeAll();
+		self.refreshColumns(newValue);
+	};
+
+	self.tableToSearch.subscribe(function(newValue) {
+		self.columns.removeAll();
+		self.refreshColumns(newValue);
+	});
+
+	self.refreshColumns = function(newValue) {
+		$.getJSON("php/getColumns.php", { "table": newValue }, function(columns) {
+			var mappedValues = $.map(columns, function(item) {
+				return item.Field;
+			});
+			for(var i = 0; i < mappedValues.length; i++) {
+				if (mappedValues[i].indexOf("ID") == -1)
+                	self.columns.push(mappedValues[i]);
+            }
+		});
+	};
 
 	self.searchForH = function() {
 		$.ajax({
 			url: "php/honorSearch.php",
 			type: "get",
-			data: "search=" + encodeURIComponent(self.search().toString()),
+			data: "search=" + encodeURIComponent(self.search().toString()) + "&column=" + encodeURIComponent(self.columnToSearch().toString()),
 			cache: false,
 			success: function(shows) {
             	var showData = JSON.parse(shows);
             	var mappedShows = $.map(showData, function(item) {
-                	return new Honor(item.AwardID, item.AwardName, item.YearGiven, item.NominatedWon, item.ShowName, item.WorkID, item.PersonName);
+                	return new Honor(item.AwardID, item.AwardName, item.YearGiven, item.NominatedWon, item.ShowName, item.WorkID, item.PersonName, item.TitleName);
                 });
                 self.honorSearchResults.removeAll();
                 for(var i = 0; i < mappedShows.length; i++) {
@@ -262,7 +300,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/musicSearch.php",
 			type: "get",
-			data: "search=" + encodeURIComponent(self.search().toString()),
+			data: "search=" + encodeURIComponent(self.search().toString()) + "&column=" + encodeURIComponent(self.columnToSearch().toString()),
 			cache: false,
 			success: function(shows) {
             	var showData = JSON.parse(shows);
@@ -285,7 +323,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/movieSearch.php",
 			type: "get",
-			data: "search=" + encodeURIComponent(self.search().toString()),
+			data: "search=" + encodeURIComponent(self.search().toString()) + "&column=" + encodeURIComponent(self.columnToSearch().toString()),
 			cache: false,
 			success: function(shows) {
             	var showData = JSON.parse(shows);
@@ -308,7 +346,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/stageSearch.php",
 			type: "get",
-			data: "search=" + encodeURIComponent(self.search().toString()),
+			data: "search=" + encodeURIComponent(self.search().toString()) + "&column=" + encodeURIComponent(self.columnToSearch().toString()),
 			cache: false,
 			success: function(shows) {
             	var showData = JSON.parse(shows);
@@ -331,7 +369,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/awardShowSearch.php",
 			type: "get",
-			data: "search=" + encodeURIComponent(self.search().toString()),
+			data: "search=" + encodeURIComponent(self.search().toString()) + "&column=" + encodeURIComponent(self.columnToSearch().toString()),
 			cache: false,
 			success: function(shows) {
             	var showData = JSON.parse(shows);
@@ -354,7 +392,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/personSearch.php",
 			type: "get",
-			data: "search=" + encodeURIComponent(self.search().toString()),
+			data: "search=" + encodeURIComponent(self.search().toString()) + "&column=" + encodeURIComponent(self.columnToSearch().toString()),
 			cache: false,
 			success: function(shows) {
             	var showData = JSON.parse(shows);
@@ -377,7 +415,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/tvSearch.php",
 			type: "get",
-			data: "search=" + encodeURIComponent(self.search().toString()),
+			data: "search=" + encodeURIComponent(self.search().toString()) + "&column=" + encodeURIComponent(self.columnToSearch().toString()),
 			cache: false,
 			success: function(shows) {
             	var showData = JSON.parse(shows);
@@ -396,6 +434,7 @@ var TestViewModel = function() {
 		});
 	}
 
+		/* User Insert */
 		self.userid = ko.observable("");
 		self.userpersonname = ko.observable("");
         self.usermusictitle = ko.observable("");
@@ -447,11 +486,58 @@ var TestViewModel = function() {
         self.adminstageplacefilmed = ko.observable("");
         self.adminstageficlocation = ko.observable("");
 
+	self.searchTable = function() {
+		if (self.tableToSearch() === "AwardShow") {
+			self.searchForAS();
+		}
+		else if (self.tableToSearch() === "Honor") {
+			self.searchForH();
+		}
+		else if (self.tableToSearch() === "Movies") {
+			self.searchForMV();
+		}
+		else if (self.tableToSearch() === "Music") {
+			self.searchForMU();
+		}
+		else if (self.tableToSearch() === "People") {
+			self.searchForP();
+		}
+		else if (self.tableToSearch() === "Stage") {
+			self.searchForS();
+		}
+		else if (self.tableToSearch() === "Television") {
+			self.searchForTV();
+		}
+	}
+
+	self.viewBreakdown = function(){
+		$.ajax({
+			url: "php/percentages.php",
+			type: "get",
+			data: "table="+encodeURIComponent(self.tableToSearch().toString())+"&column="+encodeURIComponent(self.columnToSearch().toString()),
+			cache: false,
+			success: function(shows){
+				var showData = JSON.parse(shows);
+				var mappedShows = $.map(showData, function(item){
+					return new Result(item[0], item[1]);
+				});
+				self.breakdownResults.removeAll();
+				for(var i =0;i<mappedShows.length; i++){
+					self.breakdownResults.push(mappedShows[i]);
+				}
+			},
+			error: function(){
+				alert("Something went wrong");
+			}
+		});
+	}
+
+
 	self.postuserPersonToDB = function() {
 		$.ajax({
 			url: "php/postuserperson.php",
 			type: "post",
-			data: "userid=" + parseInt(self.userid()) + "&userpersonname=" + encodeURIComponent(self.userpersonname().toString()) ,
+			data: "userid=" + parseInt(self.userid()) + "&userpersonname=" + encodeURIComponent(self.userpersonname().toString()),
 			cache: false,
 			success: function() {
 				alert("Your data was successfully submitted!");
@@ -606,3 +692,4 @@ var TestViewModel = function() {
 	}
 
 };
+

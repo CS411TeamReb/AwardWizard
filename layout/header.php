@@ -31,7 +31,9 @@
 						<li><a href="index.php">Home</a></li>
 						<li><a href="dashboard.php">Dashboard</a></li>
 						<li><a href="search.php">Search</a></li>
+						<li><a href="advanced_search.php">Advanced Search</a></li>
 						<li><a href="insert.php">Insert</a></li>
+						<li><a href="breakdown.php">Data Breakdown</a></li>
 					</ul>
 				</div>
 			</div>

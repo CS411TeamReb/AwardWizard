@@ -4,7 +4,8 @@
 	mysql_select_db('awardwiz_main');
 
 	$term = $_GET['search'];
-        $result = mysql_query("SELECT * FROM People WHERE Name LIKE '%$term%'");
+	$column = $_GET['column'];
+        $result = mysql_query(sprintf("SELECT * FROM People WHERE %s LIKE '%%%s%%'", $column, $term));
 
 	if (!$result) {
 		die('Could not query:' . mysql_error());

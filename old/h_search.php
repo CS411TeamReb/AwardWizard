@@ -16,6 +16,7 @@
 				<td>Person</td>
 				<td>Award Show</td>
 				<td>Year Given</td>
+				<td>Work Name</td>
 			<tr/>
 		</thead>
 		<tbody data-bind="foreach: honorSearchResults ">
@@ -25,6 +26,7 @@
 				<td data-bind="text: PersonName"></td>
 				<td data-bind="text: ShowName"></td>
 				<td data-bind="text: YearGiven"></td>
+				<td data-bind="text: WorkName"></td>
 			</tr>
 		</tbody>
 	</table>
