@@ -4,7 +4,12 @@
 	mysql_select_db('awardwiz_main');
 	
 	$table = $_GET['table'];
-	$result = mysql_query(sprintf("SELECT * FROM %s", $table));
+	if (strcmp($table, "Honor")) {
+		$result = mysql_query(sprintf("SELECT * FROM Honor JOIN Works ON Honor.WorkID = Works.WorkID"));
+	}
+	else {
+		$result = mysql_query(sprintf("SELECT * FROM %s", $table));
+	}
 
 	if (!$result) {
 		die('Could not query:' . mysql_error());
