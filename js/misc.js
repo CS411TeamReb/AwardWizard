@@ -5,10 +5,10 @@ function createPieChart(jsonData) {
 		var obj = { "label": jsonData[i][0], "value": jsonData[i][1]};
 		data.push(obj);
 	}
-	var width = 960, 
+	var width = 1024, 
 		height = 500, 
 		radius = Math.min(width, height) / 2,
-		labelr = radius + 60;
+		labelr = radius - 100;
 	var color = d3.scale.category20c();
 
 	var vis = d3.select('#chart')
@@ -47,5 +47,5 @@ function createPieChart(jsonData) {
 		.attr("text-anchor", function(d) {
 			return (d.endAngle + d.startAngle) / 2 > Math.PI ? "end" : "start";
 		})
-		.text(function(d,i) { return data[i].label; });
+		.text(function(d,i) { return data[i].label + ": " + data[i].value + "%"; });
 }
