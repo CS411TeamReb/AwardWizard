@@ -29,6 +29,7 @@
 	</tbody>
 </table>
 </div>
+<svg id="chart"></svg>
 </div>
 <?php
 	include 'layout/footer.php';

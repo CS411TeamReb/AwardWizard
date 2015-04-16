@@ -463,6 +463,7 @@ var TestViewModel = function() {
 			cache: false,
 			success: function(shows){
 				var showData = JSON.parse(shows);
+				createPieChart(showData);
 				var mappedShows = $.map(showData, function(item){
 					return new Result(item[0], item[1]);
 				});
