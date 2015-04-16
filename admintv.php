@@ -55,6 +55,16 @@
 </tr>
 <tr>
 <td><div class="input-group">
+  <input type="text" class="form-control" placeholder="Place Filmed Latitude" aria-describedby="basic-addon1" data-bind="value: admintvplacefilmedlat">
+</div></td>
+</tr>
+<tr>
+<td><div class="input-group">
+  <input type="text" class="form-control" placeholder="Place Filmed Longitude" aria-describedby="basic-addon1" data-bind="value: admintvplacefilmedlong">
+</div></td>
+</tr>
+<tr>
+<td><div class="input-group">
   <input type="text" class="form-control" placeholder="TV Show Fictional Location" aria-describedby="basic-addon1" data-bind="value: admintvficlocation">
 </div></td>
 </tr>
