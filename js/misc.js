@@ -7,7 +7,8 @@ function createPieChart(jsonData) {
 	}
 	var width = 960, 
 		height = 500, 
-		radius = Math.min(width, height) / 2;
+		radius = Math.min(width, height) / 2,
+		labelr = radius + 60;
 	var color = d3.scale.category20c();
 
 	var vis = d3.select('#chart')
@@ -37,8 +38,14 @@ function createPieChart(jsonData) {
 		.attr("transform", function(d) {
 			d.innerRadius = 0;
 			d.outerRadius = radius;
-			return "translate(" + arc.centroid(d) + ")";
+			var c = arc.centroid(d),
+				x = c[0],
+				y = c[1],
+				h = Math.sqrt(x*x + y*y);
+			return "translate(" + (x/h * labelr) +  ',' + (y/h * labelr) +  ")";
 		})
-		.attr("text-anchor", "middle")
+		.attr("text-anchor", function(d) {
+			return (d.endAngle + d.startAngle) / 2 > Math.PI ? "end" : "start";
+		})
 		.text(function(d,i) { return data[i].label; });
 }
