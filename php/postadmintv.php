@@ -14,6 +14,8 @@
         $admintvplacefilmed = $_POST['admintvplacefilmed'];
         $admintvficlocation = $_POST['admintvficlocation'];
         $admintvgenre = $_POST['admintvgenre'];
+        $admintvplacefilmedlat = $_POST['admintvplacefilmedlat'];
+        $admintvplacefilmedlong = $_POST['admintvplacefilmedlong'];
         
         $query4 = mysql_query(sprintf("SELECT COUNT(*) FROM Television"));
 	$result = mysql_result($query4, 0, 0);
@@ -24,10 +26,9 @@
 
 	$query = mysql_query(sprintf("INSERT INTO Television (WorkID, Title, Episodes, Seasons, StillRunning, Network, CameraSetup, MinimumRuntime, MaximumRuntime) VALUES ('%s', '%s', '%d', '%d', '%s', '%s', '%s', '%d', '%d')", $workID, $admintvtitle, $admintvnumepisodes, $admintvnumseasons, $admintvstillrunning, $admintvnetwork, $admintvcamerasetup, $admintvminruntime, $admintvmaxruntime));
 	
-	/*
-	$query2 = mysql_query(sprintf("INSERT INTO FilmedIn (Location) VALUES ('%s')", $admintvplacefilmed));
-	$query3 = mysql_query(sprintf("INSERT INTO FictionalLocation (Location) VALUES ('%s')", $admintvficlocation));
-	*/
+	$query2 = mysql_query(sprintf("INSERT INTO Locations (WorkID, Location, FilmedOrFiction, Latitude, Longitude) VALUES ('%s', '%s', 'Filmed', '%f', '%f')", $workID, $admintvplacefilmed, $admintvplacefilmedlat, $admintvplacefilmedlong));
+	
+	$query3 = mysql_query(sprintf("INSERT INTO Locations (WorkID, Location, FilmedOrFiction) VALUES ('%s', '%s', 'Fiction')", $workID, $admintvficlocation));
 
 	if (!$query) {
 		die('Could not query:' . mysql_error());

@@ -431,6 +431,7 @@ var TestViewModel = function() {
 		});
 	}
 
+
 	self.searchTable = function() {
 		if (self.tableToSearch() === "AwardShow") {
 			self.searchForAS();
@@ -476,7 +477,7 @@ var TestViewModel = function() {
 			}
 		});
 	}
-
+	
 	/* User Insert */
 	self.userid = ko.observable("");
 	self.userpersonname = ko.observable("");
@@ -542,16 +543,10 @@ var TestViewModel = function() {
         
        	self.admintvplacefilmedlat = ko.observable("");
        	self.admintvplacefilmedlong = ko.observable("");
-       	self.admintvficlocationlat = ko.observable("");
-       	self.admintvficlocationlong = ko.observable("");
        	self.adminmovieplacefilmedlat = ko.observable("");
        	self.adminmovieplacefilmedlong = ko.observable("");
-       	self.adminmovieficlocationlat = ko.observable("");
-       	self.adminmovieficlocationlong = ko.observable("");
        	self.adminstageplacefilmedlat = ko.observable("");
        	self.adminstageplacefilmedlong = ko.observable("");
-       	self.adminstageficlocationlat = ko.observable("");
-       	self.adminstageficlocationlong = ko.observable("");
 
 
 	self.postuserPersonToDB = function() {
@@ -671,7 +666,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/postadmintv.php",
 			type: "post",
-			data: "admintvtitle=" + encodeURIComponent(self.admintvtitle().toString()) + "&admintvgenre=" + encodeURIComponent(self.admintvgenre().toString()) + "&admintvnumepisodes=" + parseInt(self.admintvnumepisodes()) + "&admintvnumseasons=" + parseInt(self.admintvnumseasons()) + "&admintvstillrunning=" + encodeURIComponent(self.admintvstillrunning().toString()) + "&admintvnetwork=" + encodeURIComponent(self.admintvnetwork().toString()) + "&admintvcamerasetup=" + encodeURIComponent(self.admintvcamerasetup().toString()) + "&admintvminruntime=" + parseInt(self.admintvminruntime()) + "&admintvmaxruntime=" + parseInt(self.admintvmaxruntime()) + "&admintvplacefilmed=" + encodeURIComponent(self.admintvplacefilmed().toString()) + "&admintvficlocation=" + encodeURIComponent(self.admintvficlocation().toString()) + "&admintvplacefilmed=" + encodeURIComponent(self.admintvplacefilmed().toString()) + "&admintvficlocation=" + encodeURIComponent(self.admintvficlocation().toString()),
+			data: "admintvtitle=" + encodeURIComponent(self.admintvtitle().toString()) + "&admintvgenre=" + encodeURIComponent(self.admintvgenre().toString()) + "&admintvnumepisodes=" + parseInt(self.admintvnumepisodes()) + "&admintvnumseasons=" + parseInt(self.admintvnumseasons()) + "&admintvstillrunning=" + encodeURIComponent(self.admintvstillrunning().toString()) + "&admintvnetwork=" + encodeURIComponent(self.admintvnetwork().toString()) + "&admintvcamerasetup=" + encodeURIComponent(self.admintvcamerasetup().toString()) + "&admintvminruntime=" + parseInt(self.admintvminruntime()) + "&admintvmaxruntime=" + parseInt(self.admintvmaxruntime()) + "&admintvplacefilmed=" + encodeURIComponent(self.admintvplacefilmed().toString()) + "&admintvficlocation=" + encodeURIComponent(self.admintvficlocation().toString()) + "&admintvplacefilmedlat=" + parseFloat(self.admintvplacefilmedlat()) + "&admintvplacefilmedlong=" + parseFloat(self.admintvplacefilmedlong()),
 			cache: false,
 			success: function() {
 				alert("Your data was successfully submitted!");
@@ -686,7 +681,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/postadminmovie.php",
 			type: "post",
-			data: "adminmovietitle=" + encodeURIComponent(self.adminmovietitle().toString()) + "&adminmoviegenre=" + encodeURIComponent(self.adminmoviegenre().toString()) + "&adminmovierating=" + encodeURIComponent(self.adminmovierating().toString()) + "&adminmovieboxoffice=" + parseFloat(self.adminmovieboxoffice()) + "&adminmoviebudget=" + parseFloat(self.adminmoviebudget()) + "&adminmovieyearnom=" + parseInt(self.adminmovieyearnom()) + "&adminmovieplacefilmed=" + encodeURIComponent(self.adminmovieplacefilmed().toString()) + "&adminmovieficlocation=" + encodeURIComponent(self.adminmovieficlocation().toString()),
+			data: "adminmovietitle=" + encodeURIComponent(self.adminmovietitle().toString()) + "&adminmoviegenre=" + encodeURIComponent(self.adminmoviegenre().toString()) + "&adminmovierating=" + encodeURIComponent(self.adminmovierating().toString()) + "&adminmovieboxoffice=" + parseFloat(self.adminmovieboxoffice()) + "&adminmoviebudget=" + parseFloat(self.adminmoviebudget()) + "&adminmovieyearnom=" + parseInt(self.adminmovieyearnom()) + "&adminmovieplacefilmed=" + encodeURIComponent(self.adminmovieplacefilmed().toString()) + "&adminmovieficlocation=" + encodeURIComponent(self.adminmovieficlocation().toString()) + "&adminmovieplacefilmedlat=" + parseFloat(self.adminmovieplacefilmedlat()) + "&adminmovieplacefilmedlong=" + parseFloat(self.adminmovieplacefilmedlong()),
 			cache: false,
 			success: function() {
 				alert("Your data was successfully submitted!");
@@ -701,7 +696,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/postadminstage.php",
 			type: "post",
-			data: "adminstagetitle=" + encodeURIComponent(self.adminstagetitle().toString()) + "&adminstagesetting=" + encodeURIComponent(self.adminstagesetting().toString()) + "&adminstageiteration=" + parseInt(self.adminstageiteration()) + "&adminstagetype=" + encodeURIComponent(self.adminstagetype().toString()) + "&adminstagegenre=" + encodeURIComponent(self.adminstagegenre().toString()) + "&adminstagesongnum=" + parseInt(self.adminstagesongnum()) + "&adminstageyear=" + parseInt(self.adminstageyear()) + "&adminstagetheatre=" + encodeURIComponent(self.adminstagetheatre().toString()) + "&adminstagedateopened=" + encodeURIComponent(self.adminstagedateopened().toString()) + "&adminstagedateclosed=" + encodeURIComponent(self.adminstagedateclosed().toString()) + "&adminstagenumpreviews=" + parseInt(self.adminstagenumpreviews()) + "&adminstagenumperformances=" + parseInt(self.adminstagenumperformances()) + "&adminstagerunning=" + encodeURIComponent(self.adminstagerunning().toString()) + "&adminstageplacefilmed=" + encodeURIComponent(self.adminstageplacefilmed().toString()) + "&adminstageficlocation=" + encodeURIComponent(self.adminstageficlocation().toString()),
+			data: "adminstagetitle=" + encodeURIComponent(self.adminstagetitle().toString()) + "&adminstagesetting=" + encodeURIComponent(self.adminstagesetting().toString()) + "&adminstageiteration=" + parseInt(self.adminstageiteration()) + "&adminstagetype=" + encodeURIComponent(self.adminstagetype().toString()) + "&adminstagegenre=" + encodeURIComponent(self.adminstagegenre().toString()) + "&adminstagesongnum=" + parseInt(self.adminstagesongnum()) + "&adminstageyear=" + parseInt(self.adminstageyear()) + "&adminstagetheatre=" + encodeURIComponent(self.adminstagetheatre().toString()) + "&adminstagedateopened=" + encodeURIComponent(self.adminstagedateopened().toString()) + "&adminstagedateclosed=" + encodeURIComponent(self.adminstagedateclosed().toString()) + "&adminstagenumpreviews=" + parseInt(self.adminstagenumpreviews()) + "&adminstagenumperformances=" + parseInt(self.adminstagenumperformances()) + "&adminstagerunning=" + encodeURIComponent(self.adminstagerunning().toString()) + "&adminstageplacefilmed=" + encodeURIComponent(self.adminstageplacefilmed().toString()) + "&adminstageficlocation=" + encodeURIComponent(self.adminstageficlocation().toString()) + "&adminstageplacefilmedlat=" + parseFloat(self.adminstageplacefilmedlat()) + "&adminstageplacefilmedlong=" + parseFloat(self.adminstageplacefilmedlong()),
 			cache: false,
 			success: function() {
 				alert("Your data was successfully submitted!");
@@ -726,4 +721,6 @@ var TestViewModel = function() {
 			}
 		});
 	}
+
+
 };
