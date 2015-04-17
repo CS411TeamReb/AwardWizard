@@ -107,6 +107,14 @@ var TestViewModel = function() {
 	self.updateStageData = ko.observableArray([]);
 	self.updateTVData = ko.observableArray([]);
 
+	$.getJSON("php/getData.php", { "table": "AwardShow" }, function(values) {
+		var mappedValues = $.map(values, function(item) {
+			return new AwardShow(item.ShowName, item.Description, item.Year, item.Type, item.Criteria, item.VotingPanel);
+		});
+		self.updateAwardData.removeAll();
+		self.updateAwardData(mappedValues);
+	});
+
 	function refresh(newValue) {
 		$.ajax({
 			url: "php/getData.php",
@@ -249,6 +257,14 @@ var TestViewModel = function() {
     self.columns = ko.observableArray([]);
 	self.columnToSearch = ko.observableArray("");
 	self.tableToSearch = ko.observable("AwardShow");
+
+	$.getJSON("php/getColumns.php", { "table": "AwardShow" }, function(columns) {
+		var mappedValues = $.map(columns, function(item) {
+			if (item.Field.indexOf("ID") == -1)
+				return item.Field;
+		});
+		self.columns(mappedValues);
+	});
 
 	function refreshColumns(newValue) {
 		self.columns.removeAll();
@@ -482,72 +498,72 @@ var TestViewModel = function() {
 	/* User Insert */
 	self.userid = ko.observable("");
 	self.userpersonname = ko.observable("");
-        self.usermusictitle = ko.observable("");
-        self.usermusicartist = ko.observable("");
-        self.usertvtitle = ko.observable("");
-        self.usermovietitle = ko.observable("");
-        self.userstagetitle = ko.observable("");
-        self.adminpersonname = ko.observable("");
-        self.adminpersonorigin = ko.observable("");
-        self.adminpersonoccupation = ko.observable("");
-        self.adminpersongender = ko.observable("");
-        self.adminpersonbirthdate = ko.observable("");
-        self.adminmusictitle = ko.observable("");
-        self.adminmusicartist = ko.observable("");
-        self.adminmusicissingle = ko.observable("");
-        self.adminmusiceligyear = ko.observable("");
-        self.adminmusicreleaseyear = ko.observable("");
-        self.adminmusicgenre = ko.observable("");
-        self.admintvtitle = ko.observable("");
-        self.admintvnumepisodes = ko.observable("");
-        self.admintvnumseasons = ko.observable("");
-        self.admintvstillrunning = ko.observable("");
-        self.admintvnetwork = ko.observable("");
-        self.admintvcamerasetup = ko.observable("");
-        self.admintvminruntime = ko.observable("");
-        self.admintvmaxruntime = ko.observable("");
-        self.admintvplacefilmed = ko.observable("");
-        self.admintvficlocation = ko.observable("");
-        self.admintvgenre = ko.observable("");
-        self.adminmovietitle = ko.observable("");
-        self.adminmovierating = ko.observable("");
-        self.adminmovieboxoffice = ko.observable("");
-        self.adminmoviebudget = ko.observable("");
-        self.adminmovieyearnom = ko.observable("");
-        self.adminmovieplacefilmed = ko.observable("");
-        self.adminmovieficlocation = ko.observable("");
-        self.adminmoviegenre = ko.observable("");
-        self.adminstagetitle = ko.observable("");
-        self.adminstagesetting = ko.observable("");
-        self.adminstageiteration = ko.observable("");
-        self.adminstagetype = ko.observable("");
-        self.adminstagegenre = ko.observable("");
-        self.adminstagesongnum = ko.observable("");
-        self.adminstageyear = ko.observable("");
-        self.adminstagetheatre = ko.observable("");
-        self.adminstagedateopened = ko.observable("");
-        self.adminstagedateclosed = ko.observable("");
-        self.adminstagenumpreviews = ko.observable("");
-        self.adminstagenumperformances = ko.observable("");
-        self.adminstagerunning = ko.observable("");
-        self.adminstageplacefilmed = ko.observable("");
-        self.adminstageficlocation = ko.observable("");
-        
-        
-        self.adminhonorshowname = ko.observable("");
-        self.adminhonorawardname = ko.observable("");
-        self.adminhonorworkname = ko.observable("");
-        self.adminhonorpersonname = ko.observable("");
-        self.adminhonoryeargiven = ko.observable("");
-        self.adminhonornomorwon = ko.observable("");
-        
-        
-       	self.admintvplacefilmedlat = ko.observable("");
-       	self.admintvplacefilmedlong = ko.observable("");
-       	self.adminmovieplacefilmedlat = ko.observable("");
-       	self.adminmovieplacefilmedlong = ko.observable("");
-       	self.adminstageplacefilmedlat = ko.observable("");
-       	self.adminstageplacefilmedlong = ko.observable("");
+    self.usermusictitle = ko.observable("");
+    self.usermusicartist = ko.observable("");
+    self.usertvtitle = ko.observable("");
+    self.usermovietitle = ko.observable("");
+    self.userstagetitle = ko.observable("");
+    self.adminpersonname = ko.observable("");
+    self.adminpersonorigin = ko.observable("");
+    self.adminpersonoccupation = ko.observable("");
+    self.adminpersongender = ko.observable("");
+    self.adminpersonbirthdate = ko.observable("");
+    self.adminmusictitle = ko.observable("");
+    self.adminmusicartist = ko.observable("");
+    self.adminmusicissingle = ko.observable("");
+    self.adminmusiceligyear = ko.observable("");
+    self.adminmusicreleaseyear = ko.observable("");
+    self.adminmusicgenre = ko.observable("");
+    self.admintvtitle = ko.observable("");
+    self.admintvnumepisodes = ko.observable("");
+    self.admintvnumseasons = ko.observable("");
+    self.admintvstillrunning = ko.observable("");
+    self.admintvnetwork = ko.observable("");
+    self.admintvcamerasetup = ko.observable("");
+    self.admintvminruntime = ko.observable("");
+    self.admintvmaxruntime = ko.observable("");
+    self.admintvplacefilmed = ko.observable("");
+    self.admintvficlocation = ko.observable("");
+    self.admintvgenre = ko.observable("");
+    self.adminmovietitle = ko.observable("");
+    self.adminmovierating = ko.observable("");
+    self.adminmovieboxoffice = ko.observable("");
+    self.adminmoviebudget = ko.observable("");
+    self.adminmovieyearnom = ko.observable("");
+    self.adminmovieplacefilmed = ko.observable("");
+    self.adminmovieficlocation = ko.observable("");
+    self.adminmoviegenre = ko.observable("");
+    self.adminstagetitle = ko.observable("");
+    self.adminstagesetting = ko.observable("");
+    self.adminstageiteration = ko.observable("");
+    self.adminstagetype = ko.observable("");
+    self.adminstagegenre = ko.observable("");
+    self.adminstagesongnum = ko.observable("");
+    self.adminstageyear = ko.observable("");
+    self.adminstagetheatre = ko.observable("");
+    self.adminstagedateopened = ko.observable("");
+    self.adminstagedateclosed = ko.observable("");
+    self.adminstagenumpreviews = ko.observable("");
+    self.adminstagenumperformances = ko.observable("");
+    self.adminstagerunning = ko.observable("");
+    self.adminstageplacefilmed = ko.observable("");
+    self.adminstageficlocation = ko.observable("");
+    
+    
+    self.adminhonorshowname = ko.observable("");
+    self.adminhonorawardname = ko.observable("");
+    self.adminhonorworkname = ko.observable("");
+    self.adminhonorpersonname = ko.observable("");
+    self.adminhonoryeargiven = ko.observable("");
+    self.adminhonornomorwon = ko.observable("");
+    
+    
+   	self.admintvplacefilmedlat = ko.observable("");
+   	self.admintvplacefilmedlong = ko.observable("");
+   	self.adminmovieplacefilmedlat = ko.observable("");
+   	self.adminmovieplacefilmedlong = ko.observable("");
+   	self.adminstageplacefilmedlat = ko.observable("");
+   	self.adminstageplacefilmedlong = ko.observable("");
 
 
 	self.postuserPersonToDB = function() {
@@ -722,6 +738,4 @@ var TestViewModel = function() {
 			}
 		});
 	}
-
-
 };
