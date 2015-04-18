@@ -28,6 +28,24 @@ var TestViewModel = function() {
 		self.TitleName = ko.observable(titleName || "");
 	}
 
+	function Locations(workid, location, filmedfic, latitude, longitude) {
+		var self = this;
+		self.WorkID = ko.observable(workid || "");
+		self.Location = ko.observable(location || "");
+		self.OldLocation = location;
+		self.FilmedOrFiction = ko.observable(filmedfic || "");
+		self.OldFilmed = filmedfic;
+		self.Latitude = ko.observable(latitude || 0.0);
+		self.Longitude = ko.observable(longitude || 0.0);
+	}
+
+	function Genre(workid, genre) {
+		var self = this;
+		self.WorkID = ko.observable(workid || "");
+		self.GenreName = ko.observable(genre || "");
+		self.OldGenre = genre;
+	}
+
 	function Movie(id, title, rating, boxOffice, budget, year) {
 		var self = this;
 		self.WorkID = ko.observable(id || "");
@@ -107,6 +125,9 @@ var TestViewModel = function() {
 	self.updateStageData = ko.observableArray([]);
 	self.updateTVData = ko.observableArray([]);
 
+	self.updateLocationData = ko.observableArray([]);
+	self.updateGenreData = ko.observableArray([]);
+
 	$.getJSON("php/getData.php", { "table": "AwardShow" }, function(values) {
 		var mappedValues = $.map(values, function(item) {
 			return new AwardShow(item.ShowName, item.Description, item.Year, item.Type, item.Criteria, item.VotingPanel);
@@ -114,6 +135,42 @@ var TestViewModel = function() {
 		self.updateAwardData.removeAll();
 		self.updateAwardData(mappedValues);
 	});
+
+	self.populateLocationsAndGenres = function(workid) {
+		$.getJSON("php/getLocations.php", { "WorkID": workid }, function(locations) {
+            var mappedValues = $.map(locations, function(item) {
+                return new Locations(item.WorkID, item.Location, item.FilmedOrFiction, item.Latitude, item.Longitude);
+            });
+            self.updateLocationData.removeAll();
+            self.updateLocationData(mappedValues);
+		});
+
+		$.getJSON("php/getGenres.php", { "WorkID": workid }, function(genres) {
+			var mappedValues = $.map(genres, function(item) {
+				return new Genre(item.WorkID, item.GenreName);
+			});
+			self.updateGenreData.removeAll();
+			self.updateGenreData(mappedValues);
+		});
+	}
+
+	self.updateLocationGenre = function() {
+		var sendData = ko.toJS({
+			"WorkID": self.updateLocationData()[0].WorkID(),
+			"Locations": self.updateLocationData(),
+			"Genres": self.updateGenreData()
+		});
+		$.ajax({
+			url: 'php/updateLocationGenre.php', 
+			type: 'post',
+			data: sendData,
+			success: function() {	
+			},
+			error: function() {
+				alert("Shit, something went wrong.");
+			}
+		});
+	}
 
 	function refresh(newValue) {
 		$.ajax({

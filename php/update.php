@@ -12,6 +12,14 @@
 	}
 	else if (strcmp($table, "Honor") == 0) {
 		$query = mysql_query(sprintf("UPDATE Honor SET YearGiven = %d, NominatedWon = '%s', ShowName = '%s', PersonName = '%s' WHERE AwardID = '%s'", $data['YearGiven'], $data['NominatedWon'], $data['ShowName'], $data['PersonName'], $data['AwardID']));
+		$query2 = mysql_query(sprintf("SELECT * FROM Works WHERE TitleName = '%s'", $data['TitleName']));
+		if (!query2) {
+			die('Could not query:' . mysql_error());
+		}
+		if (mysql_num_rows($query2) > 0) {
+			$row = mysql_fetch_object($query2);
+			$query3 = mysql_query(sprintf("UPDATE Honor SET WorkID = '%s' WHERE AwardID = '%s'", $row->WorkID, $data['AwardID']));
+		}
 	}
 	else if (strcmp($table, "Movies") == 0) {
 		$query = mysql_query(sprintf("UPDATE Movies SET Title = '%s', Rating = '%s', BoxOffice = %f, Budget = %f, Year = %d WHERE WorkID = '%s'", $data['Title'], $data['Rating'], $data['BoxOffice'], $data['Budget'], $data['Year'], $data['WorkID']));
