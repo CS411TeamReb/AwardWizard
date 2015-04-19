@@ -34,6 +34,33 @@
 						<li><a href="insert.php">Insert</a></li>
 						<li><a href="breakdown.php">Data Breakdown</a></li>
 					</ul>
+					<!--<form class="navbar-form navbar-right" role="login" data-bind="visible: LoggedIn">
+  						<div class="form-group">
+    						<input type="text" class="form-control" id="usernameInput" placeholder="Username" />
+    						<input type="password" class="form-control" id="passwordInput" placeholder="Password" />
+  						</div>
+  						<button type="submit" class="btn btn-default" data-bind="click: login">Log in</button>
+					</form>
+					<p class="navbar-right navbar-text" data-bind="visible: LoggedIn() === false">Logged In: <span data-bind="text: Username"></span></p>-->
 				</div>
 			</div>
 		</nav>
+		<!--<div class="modal fade" id="registerModal" tabindex="-1" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
+						<h4 class="modal-title">Register</h4>
+					</div>
+					<div class="modal-body">
+						<input class="form-control" placeholder="Username" type="text" id="usernameRegister" />
+						<input class="form-control" placeholder="Password" type="password" id="passwordRegister" />
+						<input class="form-control" placeholder="Email" type="text" id="emailRegister" />
+						<span id="alertText"></span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-bind="click: register">Register</button>
+					</div>
+				</div>
+			</div>
+		</div>-->
