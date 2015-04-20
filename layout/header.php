@@ -33,6 +33,7 @@
 						<li><a href="search.php">Search</a></li>
 						<li><a href="insert.php">Insert</a></li>
 						<li><a href="breakdown.php">Data Breakdown</a></li>
+						<li><a href="filmedInMap.php">Map</a></li>
 					</ul>
 				</div>
 			</div>
