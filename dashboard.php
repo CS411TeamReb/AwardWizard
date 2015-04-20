@@ -62,6 +62,7 @@
 					<th>Criteria</th>
 					<th>VotingPanel</th>
 					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateAwardData">
@@ -73,6 +74,7 @@
 					<td><textarea class="form-control" data-bind="value: Criteria"></textarea></td>
 					<td><textarea class="form-control" data-bind="value: VotingPanel"></textarea></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.deleteRow($index(), $root.tableToUpdate())}">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -89,6 +91,7 @@
 					<th>PersonName</th>
 					<th>TitleName</th>
 					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateHonorData">
@@ -100,6 +103,7 @@
 					<td><input class="form-control" data-bind="value: PersonName"></input></td>
 					<td><input class="form-control" data-bind="value: TitleName"></input></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.deleteRow($index(), $root.tableToUpdate())}">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -116,6 +120,7 @@
 					<th>Year</th>
 					<th>Details</th>
 					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateMovieData">
@@ -127,6 +132,7 @@
 					<td><input class="form-control" data-bind="value: Year" /></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.populateLocationsAndGenres(WorkID) }" data-toggle="modal" data-target="#locationGenreModal">Edit</button></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.deleteRow($index(), $root.tableToUpdate())}">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -143,6 +149,7 @@
 					<th>Genre</th>
 					<th>ReleaseYear</th>
 					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateMusicData">
@@ -154,6 +161,7 @@
 					<td><input class="form-control" data-bind="value: Genre" /></td>
 					<td><input class="form-control" data-bind="value: ReleaseYear" /></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.deleteRow($index(), $root.tableToUpdate())}">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -170,6 +178,7 @@
 					<th>Gender</th>
 					<th>Birthdate</th>
 					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updatePeopleData">
@@ -180,6 +189,7 @@
 					<td><input class="form-control" data-bind="value: Gender" /></td>
 					<td><input class="form-control" data-bind="value: Birthdate" /></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.deleteRow($index(), $root.tableToUpdate())}">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -205,6 +215,7 @@
 					<th>Running</th>
 					<th>Details</th>
 					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateStageData">
@@ -224,6 +235,7 @@
 					<td><input class="form-control" data-bind="value: Running" /></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.populateLocationsAndGenres(WorkID) }" data-toggle="modal" data-target="#locationGenreModal">Edit</button></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.deleteRow($index(), $root.tableToUpdate())}">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -243,6 +255,7 @@
 					<th>MaximumRuntime</th>
 					<th>Details</th>
 					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateTVData">
@@ -257,6 +270,7 @@
 					<td><input class="form-control" data-bind="value: MaximumRuntime" /></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.populateLocationsAndGenres(WorkID) }" data-toggle="modal" data-target="#locationGenreModal">Edit</button></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.deleteRow($index(), $root.tableToUpdate())}">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>
