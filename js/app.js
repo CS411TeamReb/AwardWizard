@@ -204,7 +204,7 @@ var TestViewModel = function() {
 	});
 
 	self.populateLocationsAndGenres = function(workid) {
-		$.getJSON("php/getLocations.php", { "WorkID": workid }, function(locations) {
+		$.getJSON("php/getLocationsUpdate.php", { "WorkID": workid }, function(locations) {
             var mappedValues = $.map(locations, function(item) {
                 return new Locations(item.WorkID, item.Location, item.FilmedOrFiction, item.Latitude, item.Longitude);
             });
