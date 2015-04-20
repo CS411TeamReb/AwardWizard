@@ -1,25 +1,44 @@
-function createPieChart(jsonData) {
-	d3.select("#chart").selectAll("*").remove();
+function createPieChart(jsonData, table, column) {
+	d3.select("#pieChart").selectAll("*").remove();
 	var data = [];
 	for (var i = 0; i < jsonData.length; i++) {
-		var obj = { "label": jsonData[i][0], "value": jsonData[i][1]};
+		var obj = { "label": jsonData[i][0], "value": parseFloat(jsonData[i][1])};
 		data.push(obj);
 	}
-	var width = 1024, 
-		height = 500, 
-		radius = Math.min(width, height) / 2,
-		labelr = radius - 100;
+	var width = 400, 
+		height = 400, 
+		radius = 180,
+		inner = 70;
 	var color = d3.scale.category20c();
 
-	var vis = d3.select('#chart')
+	var vis = d3.select('#pieChart')
 		.data([data])
 		.attr("width", width)
 		.attr("height", height)
 		.append("svg:g")
-		.attr("transform", "translate(" + radius + "," + radius + ")");
+		.attr("transform", "translate(" + (radius * 1.1) + "," + (radius * 1.1) + ")");
+
+	var textTop = vis.append("text")
+		.attr("dy", ".35em")
+		.style("text-anchor", "middle")
+		.style("word-wrap", "break-word")
+		.style("width", 20)
+		.text(table)
+		.attr("y", -10);
+
+	var textBottom = vis.append("text")
+		.attr("dy", ".35em")
+		.style("text-anchor", "middle")
+		.text(column)
+		.attr("y", 10);
 
 	var arc = d3.svg.arc()
+		.innerRadius(inner)
 		.outerRadius(radius);
+
+	var arcOver = d3.svg.arc()
+		.innerRadius(inner + 5)
+		.outerRadius(radius + 5);
 
 	var pie = d3.layout.pie()
 		.value(function(d) { return d.value; });
@@ -28,24 +47,28 @@ function createPieChart(jsonData) {
 		.data(pie)
 		.enter()
 		.append("svg:g")
-		.attr("class", "slice");
+		.attr("class", "slice")
+		.on("mouseover", function(d) {
+			d3.select(this).select("path").transition()
+				.duration(200)
+				.attr("d", arcOver);
+
+			textTop.text(d3.select(this).datum().data.label)
+				.attr("y", -10);
+
+			textBottom.text(d3.select(this).datum().data.value.toFixed(2) + "%")
+				.attr("y", 10);
+		})
+		.on("mouseout", function(d) {
+			d3.select(this).select("path").transition()
+				.duration(100)
+				.attr("d", arc)
+
+			textTop.text(table);
+			textBottom.text(column);
+		});
 
 	arcs.append("svg:path")
 		.attr("fill", function(d, i) { return color(i); })
 		.attr("d", arc);
-
-	arcs.append("svg:text")
-		.attr("transform", function(d) {
-			d.innerRadius = 0;
-			d.outerRadius = radius;
-			var c = arc.centroid(d),
-				x = c[0],
-				y = c[1],
-				h = Math.sqrt(x*x + y*y);
-			return "translate(" + (x/h * labelr) +  ',' + (y/h * labelr) +  ")";
-		})
-		.attr("text-anchor", function(d) {
-			return (d.endAngle + d.startAngle) / 2 > Math.PI ? "end" : "start";
-		})
-		.text(function(d,i) { return data[i].label + ": " + data[i].value + "%"; });
 }

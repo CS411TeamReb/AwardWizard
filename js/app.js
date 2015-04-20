@@ -112,7 +112,74 @@ var TestViewModel = function() {
         self.Category = ko.observable(category || "");
         self.Percentage = ko.observable(percentage||0);
     }
-    
+
+    /*self.Username = ko.observable("");
+    self.isAdmin = ko.observable(false);
+    self.LoggedIn = ko.observable(false);
+
+    /* Register */
+    /*self.register = function() {
+    	if (!self.LoggedIn()) {
+    		var username = $("#usernameRegister").val();
+    		var password = $("#passwordRegister").val();
+    		var email = $("#emailRegister").val();
+    		var sendData = ko.toJS({
+    			"username": username,
+    			"password": password, 
+    			"email": email
+    		});
+    		$.ajax({
+    			url: 'php/register.php',
+    			type: 'post',
+    			data: sendData,
+    			success: function(result) {
+    				var data = JSON.parse(result);
+    				if (data.registered) {
+    					$("#alertText").empty();
+    					self.Username(username);
+    					self.isAdmin(data.isAdmin);
+    					self.LoggedIn(true);
+    					$("#registerModal").modal('hide');
+    				}
+    				else {
+    					$("#alertText").val("Username or email already taken.");
+    				}
+    			}
+    		});
+    	}
+    }
+
+    /* Login */
+    /*self.login = function() {
+    	if (!self.LoggedIn) {
+    		var username = $("#usernameInput").val();
+    		var password = $("#passwordInput").val();
+    		var sendData = ko.toJS({
+    			"username": username,
+    			"password": password
+    		});
+    		$.ajax({
+    			url: 'php/login.php', 
+				type: 'get',
+				data: sendData,
+				success: function(result) {
+					var data = JSON.parse(result);
+					if (data.loggedIn) {
+						self.Username(username);
+						self.isAdmin(data.isAdmin);
+						self.LoggedIn(true);
+					}
+					else {
+						$('#registerModal').modal('show');
+					}
+				},
+				error: function() {
+					alert("Shit, something went wrong.");
+				}
+    		});
+    	}
+    }
+
     /* Update */
     self.tableToUpdate = ko.observable("AwardShow");
 	self.availableTables = ko.observableArray(["AwardShow", "Honor", "Movies", "Music", "People", "Stage", "Television"]);
@@ -137,7 +204,7 @@ var TestViewModel = function() {
 	});
 
 	self.populateLocationsAndGenres = function(workid) {
-		$.getJSON("php/getLocations.php", { "WorkID": workid }, function(locations) {
+		$.getJSON("php/getLocationsUpdate.php", { "WorkID": workid }, function(locations) {
             var mappedValues = $.map(locations, function(item) {
                 return new Locations(item.WorkID, item.Location, item.FilmedOrFiction, item.Latitude, item.Longitude);
             });
@@ -590,15 +657,71 @@ var TestViewModel = function() {
 		}
 	}
 
+	/* Breakdown */
+	self.columnsBreakdown = ko.observableArray([]);
+	self.columnToBreakdown = ko.observableArray("");
+	self.tablesToBreakdown = ko.observableArray(["Honor", "Movies", "Music", "People", "Stage", "Television"])
+	self.tableToBreakdown = ko.observable("Honor");
+
+	$.getJSON("php/getColumns.php", { "table": "Honor" }, function(columns) {
+		var mappedValues = $.map(columns, function(item) {
+			if (item.Field.indexOf("ID") == -1 && item.Field.indexOf("Award") == -1 && item.Field.indexOf("Person") == -1)
+				return item.Field;
+		});
+		self.columnsBreakdown(mappedValues);
+	});
+
+	function refreshColumnsToBreakdown(newValue) {
+		self.columnsBreakdown.removeAll();
+		self.columnToBreakdown("");
+		$.getJSON("php/getColumns.php", { "table": newValue }, function(columns) {
+			var mappedValues = $.map(columns, function(item) {
+				if (newValue === "Honor") {
+					if (item.Field.indexOf("ID") == -1 && item.indexOf("Award") == -1 && item.indexOf("Person") == -1)
+						return item.Field;
+				}
+				else if (newValue === "Movies") {
+					if (item.Field.indexOf("ID") == -1 && (item.Field.indexOf("Rating") > -1 || item.Field.indexOf("Year") > -1))
+						return item.Field;
+				}
+				else if (newValue === "Music") {
+					if (item.Field.indexOf("ID") == -1 &&  item.Field.indexOf("Title") == -1 && item.Field.indexOf("Artist") == -1)
+						return item.Field;
+				}
+				else if (newValue === "People") {
+					if (item.Field.indexOf("Name") == -1 && item.Field.indexOf("Birthdate") == -1)
+						return item.Field;
+				}
+				else if (newValue === "Stage") {
+					if (item.Field.indexOf("ID") == -1 && item.Field.indexOf("Title") == -1 && item.Type !== "datetime" && item.Field.indexOf("Previews") == -1 && item.Field.indexOf("Performances"))
+						return item.Field;
+				}
+				else if (newValue === "Television") {
+					if (item.Field.indexOf("ID") == -1 && (item.Field.indexOf("StillRunning") > -1 || item.Field.indexOf("Network") > -1 || item.Field.indexOf("CameraSetup") > -1))
+						return item.Field;
+				}
+			});
+			self.columnsBreakdown(mappedValues);
+		});
+	};
+
+	self.tableToBreakdown.changeto = function(newValue) {
+		self.tableToBreakdown(newValue);
+	};
+
+	self.tableToBreakdown.subscribe(function(newValue) {
+		refreshColumnsToBreakdown(newValue);
+	});
+
 	self.viewBreakdown = function(){
 		$.ajax({
 			url: "php/percentages.php",
 			type: "get",
-			data: "table="+encodeURIComponent(self.tableToSearch().toString())+"&column="+encodeURIComponent(self.columnToSearch().toString()),
+			data: "table="+encodeURIComponent(self.tableToBreakdown().toString())+"&column="+encodeURIComponent(self.columnToBreakdown().toString()),
 			cache: false,
 			success: function(shows){
 				var showData = JSON.parse(shows);
-				createPieChart(showData);
+				createPieChart(showData, self.tableToBreakdown(), self.columnToBreakdown());
 				var mappedShows = $.map(showData, function(item){
 					return new Result(item[0], item[1]);
 				});

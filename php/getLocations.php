@@ -2,20 +2,13 @@
 	include_once 'connect.php';
 	$connection = connect();
 	mysql_select_db('awardwiz_main');
+	$result = mysql_query(sprintf("SELECT TitleName, AwardName, PersonName, ShowName, Honor.YearGiven, Latitude, Longitude, NominatedWon, URL FROM Locations inner join Works on Works.WorkID = Locations.WorkID inner join Pictures on Pictures.WorkId = Works.WorkID inner join Honor on Honor.WorkId = Works.WorkId where FilmedOrFiction='Filmed'"));
 	
-	$workId = $_GET['WorkID'];
-	$result = mysql_query(sprintf("SELECT * FROM Locations WHERE WorkID = '%s'", $workId));
-
-	if (!$result) {
-		die('Could not query:' . mysql_error());
-	}
-
 	$resultArray = array();
 	while ($row = mysql_fetch_array($result)) {
 		$resultArray[] = $row;
 	}
-	$data = $resultArray;
-
-	mysql_close($connection);
-	echo json_encode($data);
+	$filmedIn = $resultArray;
+        mysql_close($connection);
+	echo json_encode($filmedIn);
 ?>
