@@ -126,8 +126,9 @@
   						<li role="presentation"><a href="filmedInMap.php">Filmed Locations</a></li>
   						<li role="presentation"><a href="connectedAwardMap.php">Connected Awards</a></li>
   						<li role="presentation" class="active"><a href="actorOriginMap.php">Actor/Actress Origin</a></li>
+
 					</ul> 
-				</div>
+
 			</div>
 			
 			

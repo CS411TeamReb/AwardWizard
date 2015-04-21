@@ -807,6 +807,7 @@ var TestViewModel = function() {
    	self.adminstageplacefilmedlong = ko.observable("");
 
 
+
 	self.postuserPersonToDB = function() {
 		$.ajax({
 			url: "php/postuserperson.php",
@@ -979,4 +980,6 @@ var TestViewModel = function() {
 			}
 		});
 	}
+
 };
+
