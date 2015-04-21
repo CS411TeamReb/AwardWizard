@@ -54,25 +54,26 @@
       				data.AwardName + '<br>' + personname + data.NominatedWon + '<br>' + 'Work Name: ' + data.TitleName + '<br>' 
       				+ "<img height='130' src=" + data.URL + ">" ;
 
- 					var infowindow = new google.maps.InfoWindow({
+ 				var infowindow = new google.maps.InfoWindow({
       					content: contentString
-  					});
+  				});
   				
-  					infoWindowArray.push(infowindow);
+  				infoWindowArray.push(infowindow);
   				
-  					var pinColor;
-  					if(data.NominatedWon == 'Won')
-  						pinColor = "FFFF66";
-  					else
-  						pinColor = "989896";
+  				var pinColor;
+  				if(data.NominatedWon == 'Won')
+  					pinColor = "FFFF66";
+  				else
+  					pinColor = "989896";
+  				var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + 			pinColor,
 
-  					var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
        				new google.maps.Size(21, 34),
         			new google.maps.Point(0,0),
         			new google.maps.Point(10, 34));
         	
         			
-   					var marker = new google.maps.Marker({
+
+   				var marker = new google.maps.Marker({
         				position: new google.maps.LatLng (data.Latitude, data.Longitude),
         				map: map,
         				title: data.TitleName,
@@ -81,7 +82,8 @@
     					 
     				markerArray.push(marker);
  				
- 					google.maps.event.addListener(markerArray[i], 'click', (function(i) {
+
+ 				google.maps.event.addListener(markerArray[i], 'click', (function(i) {
         				return function() {
           				infoWindowArray[i].open(map,markerArray[i]);
         				}

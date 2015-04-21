@@ -735,6 +735,22 @@ var TestViewModel = function() {
 			}
 		});
 	}
+
+	self.viewBarChart = function(table) {
+		$.ajax({
+			url: "php/barcharts.php",
+			type: "get",
+			data: "table="+encodeURIComponent(table),
+			cache: false,
+			success: function(results){
+				var chartData = JSON.parse(results);
+				createBarChart(chartData, table);
+			},
+			error: function(){
+				alert("Something went wrong");
+			}
+		})
+	}
 	
 	/* User Insert */
 	self.userid = ko.observable("");
@@ -982,4 +998,5 @@ var TestViewModel = function() {
 	}
 
 };
+
 
