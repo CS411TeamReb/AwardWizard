@@ -29,3 +29,30 @@
 #chart {
 	margin-left: 100px;
 }
+
+.bar {
+	fill: #551A8B;
+}
+
+.bar:hover {
+	fill: #508b1a;
+}
+
+.bartext {
+	font: 10px sans-serif;
+	transform: rotate(90);
+}
+
+.axis {
+	font: 10px sans-serif;
+}
+
+.axis path, .axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.x.axis path {
+	display: none;
+}
