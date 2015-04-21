@@ -103,7 +103,7 @@ function createBarChart(jsonData, table) {
 
 	var yAxis = d3.svg.axis()
 		.scale(y)
-		.orient("left")
+		.orient("left");
 
 	var svg = d3.select("#barChart")
 		.attr("width", width + (2*margin.left) + margin.right)
@@ -143,5 +143,102 @@ function createBarChart(jsonData, table) {
 		.attr("width", x.rangeBand())
 		.attr("y", function(d) { return y(parseFloat(d.C)); })
 		.attr("height", function(d) { return height - y(parseFloat(d.C)); });
+}
 
+function createGroupBarChart(jsonData) {
+	d3.select("#barChart").selectAll("*").remove();
+
+	var margin = {top: 20, right: 20, bottom: 60, left: 40},
+		width = 960 - margin.left - margin.right,
+		height = 500 - margin.top - margin.bottom;
+
+	var x0 = d3.scale.ordinal()
+		.rangeRoundBands([0, width], .1);
+
+	var x1 = d3.scale.ordinal();
+
+	var y = d3.scale.linear()
+		.range([height, 0]);
+
+	var color = d3.scale.ordinal()
+		.range(["#FF0066", "#551A8B"]);
+
+	var xAxis = d3.svg.axis()
+		.scale(x0)
+		.orient("bottom");
+
+	var yAxis = d3.svg.axis()
+		.scale(y)
+		.orient("left");
+
+	var svg = d3.select("#barChart")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	var measures = ["BoxOffice", "Budget"];
+	jsonData.forEach(function(d) {
+		d.values = [{name: "BoxOffice", value: parseFloat(d.BoxOffice)}, {name: "Budget", value: parseFloat(d.Budget)}];
+	});
+
+	console.log(jsonData);
+
+	x0.domain(jsonData.map(function(d) { return d.Title; }));
+	x1.domain(measures).rangeRoundBands([0, x0.rangeBand()]);
+	y.domain([0, d3.max(jsonData, function(d) { return d3.max(d.values, function(d) { return d.value;}); }) ]);
+
+	svg.append("g")
+		.attr("class", "x axis")
+		.attr("transform", "translate(0," + height + ")")
+		.call(xAxis)
+		.selectAll("text")
+		.style("text-anchor", "end")
+		.attr("dx", "-.8em")
+		.attr("dy", ".15em")
+		.attr("transform", function(d) { return "rotate(-65)"});
+
+	svg.append("g")
+		.attr("class", "y axis")
+		.call(yAxis)
+		.append("text")
+      	.attr("transform", "rotate(-90)")
+      	.attr("y", 6)
+      	.attr("dy", ".71em")
+      	.style("text-anchor", "end")
+      	.text("BoxOffice/Budget");
+
+    var state = svg.selectAll(".state")
+    	.data(jsonData)
+    	.enter().append("g")
+    	.attr("class", "g")
+    	.attr("transform", function(d) { return "translate(" + x0(d.Title) + ",0)"; });
+
+    state.selectAll("rect")
+    	.data(function(d) { return d.values; })
+    	.enter().append("rect")
+    	.attr("width", x1.rangeBand())
+    	.attr("x", function(d) {return x1(d.name); })
+    	.attr("y", function(d) { return y(d.value); })
+    	.attr("height", function(d) { return height - y(d.value); })
+    	.style("fill", function(d) { return color(d.name); });
+
+    var legend = svg.selectAll(".legend")
+    	.data(measures)
+    	.enter().append("g")
+    	.attr("class", "legend")
+    	.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+    legend.append("rect")
+      	.attr("x", width - 18)
+      	.attr("width", 18)
+      	.attr("height", 18)
+      	.style("fill", color);
+
+    legend.append("text")
+      	.attr("x", width - 24)
+      	.attr("y", 9)
+      	.attr("dy", ".35em")
+      	.style("text-anchor", "end")
+      	.text(function(d) { return d; });
 }
