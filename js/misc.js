@@ -71,6 +71,7 @@ function createPieChart(jsonData, table, column) {
 	arcs.append("svg:path")
 		.attr("fill", function(d, i) { return color(i); })
 		.attr("d", arc);
+
 }
 
 function createBarChart(jsonData, table) {
@@ -142,4 +143,5 @@ function createBarChart(jsonData, table) {
 		.attr("width", x.rangeBand())
 		.attr("y", function(d) { return y(parseFloat(d.C)); })
 		.attr("height", function(d) { return height - y(parseFloat(d.C)); });
+
 }

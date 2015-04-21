@@ -26,10 +26,103 @@
           center: { lat: 39.5, lng: -98.35},
           zoom: 4
         };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions); 
-					
-		
+        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
+
+
+	$.ajax({
+			url: "php/getLocations.php",
+			type: "get",
+			cache: false,
+			success: function(filmedIn) {
+				filmedInData = JSON.parse(filmedIn);
+				
+				var markerArray = [];
+				var infoWindowArray = [];
+				
+				var awardNameArray = [];
+				var awardArray = [[]];
+				
+				for (var i = 0; i < filmedInData.length; i++) {
+				var data = filmedInData[i];
+				
+				var currentIndex = awardNameArray.indexOf(data.AwardName);
+				if(currentIndex == -1){
+					awardNameArray.push(data.AwardName);
+					awardArray.push(new Array);
+					currentIndex = awardNameArray.indexOf(data.AwardName);	
+				}
+				awardArray[currentIndex].push(new google.maps.LatLng(data.Latitude, data.Longitude));
+  			      				
+      				var personname;
+      				console.log(data.PersonName);
+      				
+      				if(data.PersonName != null)
+      					personname = 'Person: ' + data.PersonName + '<br>';
+      				else
+      					personname = '';
+      				
+      				var contentString = 'Show Name & Year: ' + data.ShowName + ' ' + data.YearGiven + '<br>' + 'Award Name: ' + 			 	
+      				data.AwardName + '<br>' + personname + data.NominatedWon + '<br>' + 'Work Name: ' + data.TitleName + '<br>' 
+      				+ "<img height='130' src=" + data.URL + ">" ;
+ 				var infowindow = new google.maps.InfoWindow({
+      					content: contentString
+  				});
+  				
+  				infoWindowArray.push(infowindow);
+  				
+  				var pinColor;
+  				if(data.NominatedWon == 'Won')
+  					pinColor = "FFFF66";
+  				else
+  					pinColor = "989896";
+  				var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + 			pinColor,
+       				new google.maps.Size(21, 34),
+        			new google.maps.Point(0,0),
+        			new google.maps.Point(10, 34));
+        	
+        			
+   				var marker = new google.maps.Marker({
+        				position: new google.maps.LatLng (data.Latitude, data.Longitude),
+        				map: map,
+        				title: data.TitleName,
+        				icon: pinImage,
+    				});
+    					 
+    				markerArray.push(marker);
+ 				
+ 				google.maps.event.addListener(markerArray[i], 'click', (function(i) {
+        				return function() {
+          				infoWindowArray[i].open(map,markerArray[i]);
+        				}
+      				})(i));
+    					
+      				}
+      				
+      				function getRandomColor() {
+    					var letters = '0123456789ABCDEF'.split('');
+    					var color = '#';
+    					for (var i = 0; i < 6; i++ ) {
+        					color += letters[Math.floor(Math.random() * 16)];
+    					}
+    					return color;
+				}
+      				
+      				for(var i = 0; i < awardNameArray.length; i++){
+      					var the_polygon = new google.maps.Polygon({
+    						paths: awardArray[i],
+    						strokeColor: getRandomColor(),
+    						strokeOpacity: 0.8,
+    						strokeWeight: 1.3,
+    						fillOpacity: 0.00
+  					});
+
+					the_polygon.setMap(map);
+      				}
+				
+			}
+		});	
+
+
  	
       }          
       google.maps.event.addDomListener(window, 'load', initialize);

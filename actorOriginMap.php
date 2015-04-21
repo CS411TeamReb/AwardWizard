@@ -29,7 +29,70 @@
         var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions); 
 					
-		
+	$.ajax({
+		url: "php/getActorOriginLocations.php",
+		type: "get",
+		cache: false,
+		success: function(actorOrigins) {
+			actorOriginsData = JSON.parse(actorOrigins);
+				
+			var markerArray = [];
+			var infoWindowArray = [];
+				
+			for (var i = 0; i < actorOriginsData.length; i++) {
+			var data = actorOriginsData[i];
+
+      				
+      			var contentString = 'Name: ' + data.Name + '<br>' + 'Country of Origin: ' + 			 	
+      			data.PlaceOrigin + '<br>' + data.NominatedWon + '<br>' + data.AwardName + ' (' + data.TitleName + ')';
+      			
+      			
+ 			var infowindow = new google.maps.InfoWindow({
+      				content: contentString
+  			});
+  				
+  			infoWindowArray.push(infowindow);
+  				
+  			var pinColor;
+  			if(data.NominatedWon == 'Won')
+  				pinColor = "FFFF66";
+  			else
+  				pinColor = "989896";
+  			var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + 			pinColor,
+       			new google.maps.Size(21, 34),
+        		new google.maps.Point(0,0),
+        		new google.maps.Point(10, 34));
+        
+			var x = parseFloat(data.MaxLat) - parseFloat(data.MinLat);
+			var y = parseFloat(data.MaxLong) - parseFloat(data.MinLong);
+			x = x*(Math.random());
+			y = y*(Math.random());
+			x += parseFloat(data.MinLat);
+			y += parseFloat(data.MinLong);
+			
+        		
+        		console.log(x);
+        		console.log(y);
+        			
+   			var marker = new google.maps.Marker({
+        			position: new google.maps.LatLng(x, y),
+        			map: map,
+        			title: data.Name,
+        			icon: pinImage,
+    			});
+    					 
+    			markerArray.push(marker);
+ 				
+ 			google.maps.event.addListener(markerArray[i], 'click', (function(i) {
+        			return function() {
+          			infoWindowArray[i].open(map,markerArray[i]);
+        				}
+      			})(i));
+    					
+      			}
+				
+		}
+	});	
  	
       }          
       google.maps.event.addDomListener(window, 'load', initialize);
@@ -63,8 +126,10 @@
   						<li role="presentation"><a href="filmedInMap.php">Filmed Locations</a></li>
   						<li role="presentation"><a href="connectedAwardMap.php">Connected Awards</a></li>
   						<li role="presentation" class="active"><a href="actorOriginMap.php">Actor/Actress Origin</a></li>
-					</ul>
-				</div>
+
+					</ul> 
+
+
 			</div>
 			
 			
