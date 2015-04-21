@@ -57,3 +57,36 @@
 .x.axis path {
 	display: none;
 }
+
+#home {
+	height: 95vh;
+	width: 100%;
+	background: url(../img/Oscar-statuettes_1.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+	margin-top: 50px;
+}
+
+#home .t {
+	position: relative;
+	top: 0px;
+	width: 100%;
+	height: 95vh;
+	background: rgba(0, 0, 0, 0.8);
+	opacity: 1;
+}
+
+.homeText {
+	padding-top: 10%;
+}
+
+.row h1 {
+	color: white;
+	font-size: 100px;
+}
+
+.col-md-3 h4, .col-md-3 p, .col-md-3 ul li {
+	color: white;
+}
