@@ -749,7 +749,23 @@ var TestViewModel = function() {
 			error: function(){
 				alert("Something went wrong");
 			}
-		})
+		});
+	}
+
+	self.viewGroupBarChart = function() {
+		$.ajax({
+			url: "php/barcharts.php",
+			type: "get",
+			data: "table=Movies",
+			cache: false,
+			success: function(results) {
+				var chartData = JSON.parse(results);
+				createGroupBarChart(chartData);
+			},
+			error: function() {
+				alert("Something went wrong");
+			}
+		});
 	}
 	
 	/* User Insert */

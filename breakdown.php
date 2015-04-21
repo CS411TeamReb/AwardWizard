@@ -36,12 +36,11 @@
 			</div>
 			<div id="barCharts" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="barChartsHeading">
 				<div class="panel-body">
-
 					<button class="btn btn-default" data-bind="click: function() {viewBarChart('Genre')}">Genre Counts</button>
 					<button class="btn btn-default" data-bind="click: function() {viewBarChart('Show')}">Show Sums</button>
 					<button class="btn btn-default" data-bind="click: function() {viewBarChart('Location')}">Location Counts</button>
+					<button  class="btn btn-default" data-bind="click: viewGroupBarChart">BoxOffice Correlation</button>
 					<svg id="barChart"></svg>
-
 				</div>
 			</div>
 		</div>
