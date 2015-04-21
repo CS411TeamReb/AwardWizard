@@ -8,8 +8,8 @@
 		<script src="bower_components/knockout/dist/knockout.js" type="text/javascript"></script>
 		<script src="bower_components/d3/d3.min.js" type="text/javascript"></script>
 		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-		<script src="js/app.js" type="text/javascript"></script>
 		<script src="js/misc.js" type="text/javascript"></script>
+		<script src="js/app.js" type="text/javascript"></script>
 		<script src="bower_components/modernizr/modernizr.js" type="text/javascript"></script>
 	</body>
 </html>

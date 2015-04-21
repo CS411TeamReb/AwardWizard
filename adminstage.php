@@ -74,6 +74,16 @@
 </tr>
 <tr>
 <td><div class="input-group">
+  <input type="text" class="form-control" placeholder="Place Filmed Latitude" aria-describedby="basic-addon1" data-bind="value: adminstageplacefilmedlat">
+</div></td>
+</tr>
+<tr>
+<td><div class="input-group">
+  <input type="text" class="form-control" placeholder="Place Filmed Longitude" aria-describedby="basic-addon1" data-bind="value: adminstageplacefilmedlong">
+</div></td>
+</tr>
+<tr>
+<td><div class="input-group">
   <input type="text" class="form-control" placeholder="Stage Fictional Location" aria-describedby="basic-addon1" data-bind="value: adminstageficlocation">
 </div></td>
 </tr>

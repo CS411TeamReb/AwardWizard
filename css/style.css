@@ -19,6 +19,13 @@
 }
 
 .dropdownOptions {
-	width: 25%;
 	display: inline !important;
+}
+
+#searchDropdown {
+	width: 25%;
+}
+
+#chart {
+	margin-left: 100px;
 }

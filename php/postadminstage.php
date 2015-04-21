@@ -18,6 +18,8 @@
         $adminstagerunning = $_POST['adminstagerunning'];
         $adminstageplacefilmed = $_POST['adminstageplacefilmed'];
         $adminstageficlocation = $_POST['adminstageficlocation'];
+        $adminstageplacefilmedlat = $_POST['adminstageplacefilmedlat'];
+        $adminstageplacefilmedlong = $_POST['adminstageplacefilmedlong'];
         
         $query4 = mysql_query(sprintf("SELECT COUNT(*) FROM Stage"));
 	$result = mysql_result($query4, 0, 0);
@@ -28,10 +30,9 @@
 
 	$query = mysql_query(sprintf("INSERT INTO Stage (WorkID, Setting, Title, Iteration, Type, Genre, SongNumber, YEAR, Theatre, Open, Closed, Previews, Performances, Running) VALUES ('%s', '%s', '%s', '%d', '%s', '%s', '%d', '%d', '%s', STR_TO_DATE('%s', '%%m/%%d/%%Y'), STR_TO_DATE('%s', '%%m/%%d/%%Y'), '%d', '%d', '%s')", $workID, $adminstagesetting, $adminstagetitle, $adminstageiteration, $adminstagetype, $adminstagegenre, $adminstagesongnum, $adminstageyear, $adminstagetheatre, $adminstagedateopened, $adminstagedateclosed, $adminstagenumpreviews, $adminstagenumperformances, $adminstagerunning));
 	
-	/*
-	$query2 = mysql_query(sprintf("INSERT INTO FilmedIn (Location) VALUES ('%s')", $adminstageplacefilmed));
-	$query3 = mysql_query(sprintf("INSERT INTO FictionalLocation (Location) VALUES ('%s')", $adminstageficlocation));
-	*/
+	$query2 = mysql_query(sprintf("INSERT INTO Locations (WorkID, Location, FilmedOrFiction, Latitude, Longitude) VALUES ('%s', '%s', 'Filmed', '%f', '%f')", $workID, $adminstageplacefilmed, $adminstageplacefilmedlat, $adminstageplacefilmedlong));
+	
+	$query3 = mysql_query(sprintf("INSERT INTO Locations (WorkID, Location, FilmedOrFiction) VALUES ('%s', '%s', 'Fiction')", $workID, $adminstageficlocation));
 	
 
 	if (!$query) {
@@ -60,4 +61,3 @@
 
 	mysql_close($connection);
 ?>
-

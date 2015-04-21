@@ -4,6 +4,52 @@
 <div class="main">
 	<label for="tableDropdown">Choose Table: </label>
 	<select id="tableDropdown" class="form-control" data-bind="options: availableTables, value: tableToUpdate"></select>
+	<div class="modal fade" id="locationGenreModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
+					<h4 class="modal-title">Location and Genre Information</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Genre</th>
+							</tr>
+						</thead>
+						<tbody data-bind="foreach: updateGenreData">
+							<tr>
+								<td><input class="form-control" data-bind="value: GenreName" /></td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Location</th>
+								<th>Filmed Or Fiction</th>
+								<th>Latitude</th>
+								<th>Longitude</th>
+							</tr>
+						</thead>
+						<tbody data-bind="foreach: updateLocationData">
+							<tr>
+								<td><input class="form-control" data-bind="value: Location" /></td>
+								<td><input class="form-control" data-bind="value: FilmedOrFiction" /></td>
+								<td><input class="form-control" data-bind="value: Latitude" /></td>
+								<td><input class="form-control" data-bind="value: Longitude" /></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-bind="click: updateLocationGenre">Save</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div id="awardShowUpdate" data-bind="visible: tableToUpdate() == 'AwardShow'">
 		<p>Update Award Show</p>
 		<table class="table">
@@ -16,6 +62,7 @@
 					<th>Criteria</th>
 					<th>VotingPanel</th>
 					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateAwardData">
@@ -27,6 +74,7 @@
 					<td><textarea class="form-control" data-bind="value: Criteria"></textarea></td>
 					<td><textarea class="form-control" data-bind="value: VotingPanel"></textarea></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.deleteRow($index(), $root.tableToUpdate())}">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -41,7 +89,9 @@
 					<th>NominatedWon</th>
 					<th>ShowName</th>
 					<th>PersonName</th>
+					<th>TitleName</th>
 					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateHonorData">
@@ -51,7 +101,9 @@
 					<td><input class="form-control" data-bind="value: NominatedWon"></input></td>
 					<td><input class="form-control" data-bind="value: ShowName"></input></td>
 					<td><input class="form-control" data-bind="value: PersonName"></input></td>
+					<td><input class="form-control" data-bind="value: TitleName"></input></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.deleteRow($index(), $root.tableToUpdate())}">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -66,7 +118,9 @@
 					<th>BoxOffice (in millions)</th>
 					<th>Budget (in millions)</th>
 					<th>Year</th>
+					<th>Details</th>
 					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateMovieData">
@@ -76,7 +130,9 @@
 					<td><input class="form-control" data-bind="value: BoxOffice" /></td>
 					<td><input class="form-control" data-bind="value: Budget" /></td>
 					<td><input class="form-control" data-bind="value: Year" /></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.populateLocationsAndGenres(WorkID) }" data-toggle="modal" data-target="#locationGenreModal">Edit</button></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.deleteRow($index(), $root.tableToUpdate())}">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -93,6 +149,7 @@
 					<th>Genre</th>
 					<th>ReleaseYear</th>
 					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateMusicData">
@@ -104,6 +161,7 @@
 					<td><input class="form-control" data-bind="value: Genre" /></td>
 					<td><input class="form-control" data-bind="value: ReleaseYear" /></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.deleteRow($index(), $root.tableToUpdate())}">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -120,6 +178,7 @@
 					<th>Gender</th>
 					<th>Birthdate</th>
 					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updatePeopleData">
@@ -130,6 +189,7 @@
 					<td><input class="form-control" data-bind="value: Gender" /></td>
 					<td><input class="form-control" data-bind="value: Birthdate" /></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.deleteRow($index(), $root.tableToUpdate())}">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -153,7 +213,9 @@
 					<th>Previews</th>
 					<th>Performances</th>
 					<th>Running</th>
+					<th>Details</th>
 					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateStageData">
@@ -171,7 +233,9 @@
 					<td><input class="form-control" data-bind="value: Previews" /></td>
 					<td><input class="form-control" data-bind="value: Performances" /></td>
 					<td><input class="form-control" data-bind="value: Running" /></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.populateLocationsAndGenres(WorkID) }" data-toggle="modal" data-target="#locationGenreModal">Edit</button></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.deleteRow($index(), $root.tableToUpdate())}">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -189,7 +253,9 @@
 					<th>CameraSetup</th>
 					<th>MinimumRuntime</th>
 					<th>MaximumRuntime</th>
+					<th>Details</th>
 					<th>Update</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: updateTVData">
@@ -202,7 +268,9 @@
 					<td><input class="form-control" data-bind="value: CameraSetup" /></td>
 					<td><input class="form-control" data-bind="value: MinimumRuntime" /></td>
 					<td><input class="form-control" data-bind="value: MaximumRuntime" /></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.populateLocationsAndGenres(WorkID) }" data-toggle="modal" data-target="#locationGenreModal">Edit</button></td>
 					<td><button class="btn btn-default" data-bind="click: function() { $root.updateRow($index(), $root.tableToUpdate())}">Update</button></td>
+					<td><button class="btn btn-default" data-bind="click: function() { $root.deleteRow($index(), $root.tableToUpdate())}">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>

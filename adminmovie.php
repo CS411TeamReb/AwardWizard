@@ -40,6 +40,16 @@
 </tr>
 <tr>
 <td><div class="input-group">
+  <input type="text" class="form-control" placeholder="Place Filmed Latitude" aria-describedby="basic-addon1" data-bind="value: adminmovieplacefilmedlat">
+</div></td>
+</tr>
+<tr>
+<td><div class="input-group">
+  <input type="text" class="form-control" placeholder="Place Filmed Longitude" aria-describedby="basic-addon1" data-bind="value: adminmovieplacefilmedlong">
+</div></td>
+</tr>
+<tr>
+<td><div class="input-group">
   <input type="text" class="form-control" placeholder="Movie Fictional Location" aria-describedby="basic-addon1" data-bind="value: adminmovieficlocation">
 </div></td>
 </tr>

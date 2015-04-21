@@ -15,7 +15,7 @@
 <div class="row searchThings">
     <label>Search Term:</label>
     <input class="form-control searchTerm" type="text" data-bind="value: search"></input>
-    <select class="form-control dropdownOptions" data-bind="options: columns, value: columnToSearch"></select>
+    <select class="form-control dropdownOptions" id="searchDropdown" data-bind="options: columns, value: columnToSearch"></select>
     <button class="btn btn-default" data-bind="click: searchTable">Search</button>
 </div>
 <br/>
@@ -184,7 +184,7 @@
             <td data-bind="text: PersonName"></td>
             <td data-bind="text: ShowName"></td>
             <td data-bind="text: YearGiven"></td>
-            <td data-bind="text: WorkName"></td>
+            <td data-bind="text: TitleName"></td>
         </tr>
     </tbody>
 </table>

@@ -28,6 +28,24 @@ var TestViewModel = function() {
 		self.TitleName = ko.observable(titleName || "");
 	}
 
+	function Locations(workid, location, filmedfic, latitude, longitude) {
+		var self = this;
+		self.WorkID = ko.observable(workid || "");
+		self.Location = ko.observable(location || "");
+		self.OldLocation = location;
+		self.FilmedOrFiction = ko.observable(filmedfic || "");
+		self.OldFilmed = filmedfic;
+		self.Latitude = ko.observable(latitude || 0.0);
+		self.Longitude = ko.observable(longitude || 0.0);
+	}
+
+	function Genre(workid, genre) {
+		var self = this;
+		self.WorkID = ko.observable(workid || "");
+		self.GenreName = ko.observable(genre || "");
+		self.OldGenre = genre;
+	}
+
 	function Movie(id, title, rating, boxOffice, budget, year) {
 		var self = this;
 		self.WorkID = ko.observable(id || "");
@@ -94,7 +112,74 @@ var TestViewModel = function() {
         self.Category = ko.observable(category || "");
         self.Percentage = ko.observable(percentage||0);
     }
-    
+
+    /*self.Username = ko.observable("");
+    self.isAdmin = ko.observable(false);
+    self.LoggedIn = ko.observable(false);
+
+    /* Register */
+    /*self.register = function() {
+    	if (!self.LoggedIn()) {
+    		var username = $("#usernameRegister").val();
+    		var password = $("#passwordRegister").val();
+    		var email = $("#emailRegister").val();
+    		var sendData = ko.toJS({
+    			"username": username,
+    			"password": password, 
+    			"email": email
+    		});
+    		$.ajax({
+    			url: 'php/register.php',
+    			type: 'post',
+    			data: sendData,
+    			success: function(result) {
+    				var data = JSON.parse(result);
+    				if (data.registered) {
+    					$("#alertText").empty();
+    					self.Username(username);
+    					self.isAdmin(data.isAdmin);
+    					self.LoggedIn(true);
+    					$("#registerModal").modal('hide');
+    				}
+    				else {
+    					$("#alertText").val("Username or email already taken.");
+    				}
+    			}
+    		});
+    	}
+    }
+
+    /* Login */
+    /*self.login = function() {
+    	if (!self.LoggedIn) {
+    		var username = $("#usernameInput").val();
+    		var password = $("#passwordInput").val();
+    		var sendData = ko.toJS({
+    			"username": username,
+    			"password": password
+    		});
+    		$.ajax({
+    			url: 'php/login.php', 
+				type: 'get',
+				data: sendData,
+				success: function(result) {
+					var data = JSON.parse(result);
+					if (data.loggedIn) {
+						self.Username(username);
+						self.isAdmin(data.isAdmin);
+						self.LoggedIn(true);
+					}
+					else {
+						$('#registerModal').modal('show');
+					}
+				},
+				error: function() {
+					alert("Shit, something went wrong.");
+				}
+    		});
+    	}
+    }
+
     /* Update */
     self.tableToUpdate = ko.observable("AwardShow");
 	self.availableTables = ko.observableArray(["AwardShow", "Honor", "Movies", "Music", "People", "Stage", "Television"]);
@@ -106,6 +191,53 @@ var TestViewModel = function() {
 	self.updatePeopleData = ko.observableArray([]);
 	self.updateStageData = ko.observableArray([]);
 	self.updateTVData = ko.observableArray([]);
+
+	self.updateLocationData = ko.observableArray([]);
+	self.updateGenreData = ko.observableArray([]);
+
+	$.getJSON("php/getData.php", { "table": "AwardShow" }, function(values) {
+		var mappedValues = $.map(values, function(item) {
+			return new AwardShow(item.ShowName, item.Description, item.Year, item.Type, item.Criteria, item.VotingPanel);
+		});
+		self.updateAwardData.removeAll();
+		self.updateAwardData(mappedValues);
+	});
+
+	self.populateLocationsAndGenres = function(workid) {
+		$.getJSON("php/getLocationsUpdate.php", { "WorkID": workid }, function(locations) {
+            var mappedValues = $.map(locations, function(item) {
+                return new Locations(item.WorkID, item.Location, item.FilmedOrFiction, item.Latitude, item.Longitude);
+            });
+            self.updateLocationData.removeAll();
+            self.updateLocationData(mappedValues);
+		});
+
+		$.getJSON("php/getGenres.php", { "WorkID": workid }, function(genres) {
+			var mappedValues = $.map(genres, function(item) {
+				return new Genre(item.WorkID, item.GenreName);
+			});
+			self.updateGenreData.removeAll();
+			self.updateGenreData(mappedValues);
+		});
+	}
+
+	self.updateLocationGenre = function() {
+		var sendData = ko.toJS({
+			"WorkID": self.updateLocationData()[0].WorkID(),
+			"Locations": self.updateLocationData(),
+			"Genres": self.updateGenreData()
+		});
+		$.ajax({
+			url: 'php/updateLocationGenre.php', 
+			type: 'post',
+			data: sendData,
+			success: function() {	
+			},
+			error: function() {
+				alert("Shit, something went wrong.");
+			}
+		});
+	}
 
 	function refresh(newValue) {
 		$.ajax({
@@ -234,6 +366,67 @@ var TestViewModel = function() {
 		});
 	}
 
+	self.deleteRow = function(index, table) {
+		var sendData = {};
+		if (table === "AwardShow") {
+			sendData = ko.toJS({
+				"table": table,
+				"data": self.updateAwardData()[index]
+			});
+		}
+		else if (table === "Honor") {
+			sendData = ko.toJS({
+				"table": table,
+				"data": self.updateHonorData()[index]
+			});
+		}
+		else if (table === "Movies") {
+			sendData = ko.toJS({
+				"table": table,
+				"data": self.updateMovieData()[index]
+			});
+		}
+		else if (table === "Music") {
+			sendData = ko.toJS({
+				"table": table,
+				"data": self.updateMusicData()[index]
+			});
+		}
+		else if (table === "People") {
+			sendData = ko.toJS({
+				"table": table,
+				"data": self.updatePeopleData()[index]
+			});
+		}
+		else if (table === "Stage") {
+			sendData = ko.toJS({
+				"table": table,
+				"data": self.updateStageData()[index]
+			});
+		}
+		else if (table === "Television") {
+			sendData = ko.toJS({
+				"table": table,
+				"data": self.updateTVData()[index]
+			});
+		}
+
+		$.ajax({
+			url: 'php/delete.php', 
+			type: 'post',
+			data: sendData,
+			success: function() {
+				refresh(table);
+				alert("Your deletion was successful!");
+			},
+			error: function() {
+				alert("Shit, something went wrong.");
+			}
+		});
+	}
+
+
+
 	/* Search */
     self.search = ko.observable();
 
@@ -249,6 +442,14 @@ var TestViewModel = function() {
     self.columns = ko.observableArray([]);
 	self.columnToSearch = ko.observableArray("");
 	self.tableToSearch = ko.observable("AwardShow");
+
+	$.getJSON("php/getColumns.php", { "table": "AwardShow" }, function(columns) {
+		var mappedValues = $.map(columns, function(item) {
+			if (item.Field.indexOf("ID") == -1)
+				return item.Field;
+		});
+		self.columns(mappedValues);
+	});
 
 	function refreshColumns(newValue) {
 		self.columns.removeAll();
@@ -456,14 +657,71 @@ var TestViewModel = function() {
 		}
 	}
 
+	/* Breakdown */
+	self.columnsBreakdown = ko.observableArray([]);
+	self.columnToBreakdown = ko.observableArray("");
+	self.tablesToBreakdown = ko.observableArray(["Honor", "Movies", "Music", "People", "Stage", "Television"])
+	self.tableToBreakdown = ko.observable("Honor");
+
+	$.getJSON("php/getColumns.php", { "table": "Honor" }, function(columns) {
+		var mappedValues = $.map(columns, function(item) {
+			if (item.Field.indexOf("ID") == -1 && item.Field.indexOf("Award") == -1 && item.Field.indexOf("Person") == -1)
+				return item.Field;
+		});
+		self.columnsBreakdown(mappedValues);
+	});
+
+	function refreshColumnsToBreakdown(newValue) {
+		self.columnsBreakdown.removeAll();
+		self.columnToBreakdown("");
+		$.getJSON("php/getColumns.php", { "table": newValue }, function(columns) {
+			var mappedValues = $.map(columns, function(item) {
+				if (newValue === "Honor") {
+					if (item.Field.indexOf("ID") == -1 && item.indexOf("Award") == -1 && item.indexOf("Person") == -1)
+						return item.Field;
+				}
+				else if (newValue === "Movies") {
+					if (item.Field.indexOf("ID") == -1 && (item.Field.indexOf("Rating") > -1 || item.Field.indexOf("Year") > -1))
+						return item.Field;
+				}
+				else if (newValue === "Music") {
+					if (item.Field.indexOf("ID") == -1 &&  item.Field.indexOf("Title") == -1 && item.Field.indexOf("Artist") == -1)
+						return item.Field;
+				}
+				else if (newValue === "People") {
+					if (item.Field.indexOf("Name") == -1 && item.Field.indexOf("Birthdate") == -1)
+						return item.Field;
+				}
+				else if (newValue === "Stage") {
+					if (item.Field.indexOf("ID") == -1 && item.Field.indexOf("Title") == -1 && item.Type !== "datetime" && item.Field.indexOf("Previews") == -1 && item.Field.indexOf("Performances"))
+						return item.Field;
+				}
+				else if (newValue === "Television") {
+					if (item.Field.indexOf("ID") == -1 && (item.Field.indexOf("StillRunning") > -1 || item.Field.indexOf("Network") > -1 || item.Field.indexOf("CameraSetup") > -1))
+						return item.Field;
+				}
+			});
+			self.columnsBreakdown(mappedValues);
+		});
+	};
+
+	self.tableToBreakdown.changeto = function(newValue) {
+		self.tableToBreakdown(newValue);
+	};
+
+	self.tableToBreakdown.subscribe(function(newValue) {
+		refreshColumnsToBreakdown(newValue);
+	});
+
 	self.viewBreakdown = function(){
 		$.ajax({
 			url: "php/percentages.php",
 			type: "get",
-			data: "table="+encodeURIComponent(self.tableToSearch().toString())+"&column="+encodeURIComponent(self.columnToSearch().toString()),
+			data: "table="+encodeURIComponent(self.tableToBreakdown().toString())+"&column="+encodeURIComponent(self.columnToBreakdown().toString()),
 			cache: false,
 			success: function(shows){
 				var showData = JSON.parse(shows);
+				createPieChart(showData, self.tableToBreakdown(), self.columnToBreakdown());
 				var mappedShows = $.map(showData, function(item){
 					return new Result(item[0], item[1]);
 				});
@@ -481,78 +739,72 @@ var TestViewModel = function() {
 	/* User Insert */
 	self.userid = ko.observable("");
 	self.userpersonname = ko.observable("");
-        self.usermusictitle = ko.observable("");
-        self.usermusicartist = ko.observable("");
-        self.usertvtitle = ko.observable("");
-        self.usermovietitle = ko.observable("");
-        self.userstagetitle = ko.observable("");
-        self.adminpersonname = ko.observable("");
-        self.adminpersonorigin = ko.observable("");
-        self.adminpersonoccupation = ko.observable("");
-        self.adminpersongender = ko.observable("");
-        self.adminpersonbirthdate = ko.observable("");
-        self.adminmusictitle = ko.observable("");
-        self.adminmusicartist = ko.observable("");
-        self.adminmusicissingle = ko.observable("");
-        self.adminmusiceligyear = ko.observable("");
-        self.adminmusicreleaseyear = ko.observable("");
-        self.adminmusicgenre = ko.observable("");
-        self.admintvtitle = ko.observable("");
-        self.admintvnumepisodes = ko.observable("");
-        self.admintvnumseasons = ko.observable("");
-        self.admintvstillrunning = ko.observable("");
-        self.admintvnetwork = ko.observable("");
-        self.admintvcamerasetup = ko.observable("");
-        self.admintvminruntime = ko.observable("");
-        self.admintvmaxruntime = ko.observable("");
-        self.admintvplacefilmed = ko.observable("");
-        self.admintvficlocation = ko.observable("");
-        self.admintvgenre = ko.observable("");
-        self.adminmovietitle = ko.observable("");
-        self.adminmovierating = ko.observable("");
-        self.adminmovieboxoffice = ko.observable("");
-        self.adminmoviebudget = ko.observable("");
-        self.adminmovieyearnom = ko.observable("");
-        self.adminmovieplacefilmed = ko.observable("");
-        self.adminmovieficlocation = ko.observable("");
-        self.adminmoviegenre = ko.observable("");
-        self.adminstagetitle = ko.observable("");
-        self.adminstagesetting = ko.observable("");
-        self.adminstageiteration = ko.observable("");
-        self.adminstagetype = ko.observable("");
-        self.adminstagegenre = ko.observable("");
-        self.adminstagesongnum = ko.observable("");
-        self.adminstageyear = ko.observable("");
-        self.adminstagetheatre = ko.observable("");
-        self.adminstagedateopened = ko.observable("");
-        self.adminstagedateclosed = ko.observable("");
-        self.adminstagenumpreviews = ko.observable("");
-        self.adminstagenumperformances = ko.observable("");
-        self.adminstagerunning = ko.observable("");
-        self.adminstageplacefilmed = ko.observable("");
-        self.adminstageficlocation = ko.observable("");
-        
-        
-        self.adminhonorshowname = ko.observable("");
-        self.adminhonorawardname = ko.observable("");
-        self.adminhonorworkname = ko.observable("");
-        self.adminhonorpersonname = ko.observable("");
-        self.adminhonoryeargiven = ko.observable("");
-        self.adminhonornomorwon = ko.observable("");
-        
-        
-       	self.admintvplacefilmedlat = ko.observable("");
-       	self.admintvplacefilmedlong = ko.observable("");
-       	self.admintvficlocationlat = ko.observable("");
-       	self.admintvficlocationlong = ko.observable("");
-       	self.adminmovieplacefilmedlat = ko.observable("");
-       	self.adminmovieplacefilmedlong = ko.observable("");
-       	self.adminmovieficlocationlat = ko.observable("");
-       	self.adminmovieficlocationlong = ko.observable("");
-       	self.adminstageplacefilmedlat = ko.observable("");
-       	self.adminstageplacefilmedlong = ko.observable("");
-       	self.adminstageficlocationlat = ko.observable("");
-       	self.adminstageficlocationlong = ko.observable("");
+    self.usermusictitle = ko.observable("");
+    self.usermusicartist = ko.observable("");
+    self.usertvtitle = ko.observable("");
+    self.usermovietitle = ko.observable("");
+    self.userstagetitle = ko.observable("");
+    self.adminpersonname = ko.observable("");
+    self.adminpersonorigin = ko.observable("");
+    self.adminpersonoccupation = ko.observable("");
+    self.adminpersongender = ko.observable("");
+    self.adminpersonbirthdate = ko.observable("");
+    self.adminmusictitle = ko.observable("");
+    self.adminmusicartist = ko.observable("");
+    self.adminmusicissingle = ko.observable("");
+    self.adminmusiceligyear = ko.observable("");
+    self.adminmusicreleaseyear = ko.observable("");
+    self.adminmusicgenre = ko.observable("");
+    self.admintvtitle = ko.observable("");
+    self.admintvnumepisodes = ko.observable("");
+    self.admintvnumseasons = ko.observable("");
+    self.admintvstillrunning = ko.observable("");
+    self.admintvnetwork = ko.observable("");
+    self.admintvcamerasetup = ko.observable("");
+    self.admintvminruntime = ko.observable("");
+    self.admintvmaxruntime = ko.observable("");
+    self.admintvplacefilmed = ko.observable("");
+    self.admintvficlocation = ko.observable("");
+    self.admintvgenre = ko.observable("");
+    self.adminmovietitle = ko.observable("");
+    self.adminmovierating = ko.observable("");
+    self.adminmovieboxoffice = ko.observable("");
+    self.adminmoviebudget = ko.observable("");
+    self.adminmovieyearnom = ko.observable("");
+    self.adminmovieplacefilmed = ko.observable("");
+    self.adminmovieficlocation = ko.observable("");
+    self.adminmoviegenre = ko.observable("");
+    self.adminstagetitle = ko.observable("");
+    self.adminstagesetting = ko.observable("");
+    self.adminstageiteration = ko.observable("");
+    self.adminstagetype = ko.observable("");
+    self.adminstagegenre = ko.observable("");
+    self.adminstagesongnum = ko.observable("");
+    self.adminstageyear = ko.observable("");
+    self.adminstagetheatre = ko.observable("");
+    self.adminstagedateopened = ko.observable("");
+    self.adminstagedateclosed = ko.observable("");
+    self.adminstagenumpreviews = ko.observable("");
+    self.adminstagenumperformances = ko.observable("");
+    self.adminstagerunning = ko.observable("");
+    self.adminstageplacefilmed = ko.observable("");
+    self.adminstageficlocation = ko.observable("");
+    
+    
+    self.adminhonorshowname = ko.observable("");
+    self.adminhonorawardname = ko.observable("");
+    self.adminhonorworkname = ko.observable("");
+    self.adminhonorpersonname = ko.observable("");
+    self.adminhonoryeargiven = ko.observable("");
+    self.adminhonornomorwon = ko.observable("");
+    
+    
+   	self.admintvplacefilmedlat = ko.observable("");
+   	self.admintvplacefilmedlong = ko.observable("");
+   	self.adminmovieplacefilmedlat = ko.observable("");
+   	self.adminmovieplacefilmedlong = ko.observable("");
+   	self.adminstageplacefilmedlat = ko.observable("");
+   	self.adminstageplacefilmedlong = ko.observable("");
 
 
 	self.postuserPersonToDB = function() {
@@ -672,7 +924,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/postadmintv.php",
 			type: "post",
-			data: "admintvtitle=" + encodeURIComponent(self.admintvtitle().toString()) + "&admintvgenre=" + encodeURIComponent(self.admintvgenre().toString()) + "&admintvnumepisodes=" + parseInt(self.admintvnumepisodes()) + "&admintvnumseasons=" + parseInt(self.admintvnumseasons()) + "&admintvstillrunning=" + encodeURIComponent(self.admintvstillrunning().toString()) + "&admintvnetwork=" + encodeURIComponent(self.admintvnetwork().toString()) + "&admintvcamerasetup=" + encodeURIComponent(self.admintvcamerasetup().toString()) + "&admintvminruntime=" + parseInt(self.admintvminruntime()) + "&admintvmaxruntime=" + parseInt(self.admintvmaxruntime()) + "&admintvplacefilmed=" + encodeURIComponent(self.admintvplacefilmed().toString()) + "&admintvficlocation=" + encodeURIComponent(self.admintvficlocation().toString()) + "&admintvplacefilmed=" + encodeURIComponent(self.admintvplacefilmed().toString()) + "&admintvficlocation=" + encodeURIComponent(self.admintvficlocation().toString()),
+			data: "admintvtitle=" + encodeURIComponent(self.admintvtitle().toString()) + "&admintvgenre=" + encodeURIComponent(self.admintvgenre().toString()) + "&admintvnumepisodes=" + parseInt(self.admintvnumepisodes()) + "&admintvnumseasons=" + parseInt(self.admintvnumseasons()) + "&admintvstillrunning=" + encodeURIComponent(self.admintvstillrunning().toString()) + "&admintvnetwork=" + encodeURIComponent(self.admintvnetwork().toString()) + "&admintvcamerasetup=" + encodeURIComponent(self.admintvcamerasetup().toString()) + "&admintvminruntime=" + parseInt(self.admintvminruntime()) + "&admintvmaxruntime=" + parseInt(self.admintvmaxruntime()) + "&admintvplacefilmed=" + encodeURIComponent(self.admintvplacefilmed().toString()) + "&admintvficlocation=" + encodeURIComponent(self.admintvficlocation().toString()) + "&admintvplacefilmedlat=" + parseFloat(self.admintvplacefilmedlat()) + "&admintvplacefilmedlong=" + parseFloat(self.admintvplacefilmedlong()),
 			cache: false,
 			success: function() {
 				alert("Your data was successfully submitted!");
@@ -687,7 +939,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/postadminmovie.php",
 			type: "post",
-			data: "adminmovietitle=" + encodeURIComponent(self.adminmovietitle().toString()) + "&adminmoviegenre=" + encodeURIComponent(self.adminmoviegenre().toString()) + "&adminmovierating=" + encodeURIComponent(self.adminmovierating().toString()) + "&adminmovieboxoffice=" + parseFloat(self.adminmovieboxoffice()) + "&adminmoviebudget=" + parseFloat(self.adminmoviebudget()) + "&adminmovieyearnom=" + parseInt(self.adminmovieyearnom()) + "&adminmovieplacefilmed=" + encodeURIComponent(self.adminmovieplacefilmed().toString()) + "&adminmovieficlocation=" + encodeURIComponent(self.adminmovieficlocation().toString()),
+			data: "adminmovietitle=" + encodeURIComponent(self.adminmovietitle().toString()) + "&adminmoviegenre=" + encodeURIComponent(self.adminmoviegenre().toString()) + "&adminmovierating=" + encodeURIComponent(self.adminmovierating().toString()) + "&adminmovieboxoffice=" + parseFloat(self.adminmovieboxoffice()) + "&adminmoviebudget=" + parseFloat(self.adminmoviebudget()) + "&adminmovieyearnom=" + parseInt(self.adminmovieyearnom()) + "&adminmovieplacefilmed=" + encodeURIComponent(self.adminmovieplacefilmed().toString()) + "&adminmovieficlocation=" + encodeURIComponent(self.adminmovieficlocation().toString()) + "&adminmovieplacefilmedlat=" + parseFloat(self.adminmovieplacefilmedlat()) + "&adminmovieplacefilmedlong=" + parseFloat(self.adminmovieplacefilmedlong()),
 			cache: false,
 			success: function() {
 				alert("Your data was successfully submitted!");
@@ -702,7 +954,7 @@ var TestViewModel = function() {
 		$.ajax({
 			url: "php/postadminstage.php",
 			type: "post",
-			data: "adminstagetitle=" + encodeURIComponent(self.adminstagetitle().toString()) + "&adminstagesetting=" + encodeURIComponent(self.adminstagesetting().toString()) + "&adminstageiteration=" + parseInt(self.adminstageiteration()) + "&adminstagetype=" + encodeURIComponent(self.adminstagetype().toString()) + "&adminstagegenre=" + encodeURIComponent(self.adminstagegenre().toString()) + "&adminstagesongnum=" + parseInt(self.adminstagesongnum()) + "&adminstageyear=" + parseInt(self.adminstageyear()) + "&adminstagetheatre=" + encodeURIComponent(self.adminstagetheatre().toString()) + "&adminstagedateopened=" + encodeURIComponent(self.adminstagedateopened().toString()) + "&adminstagedateclosed=" + encodeURIComponent(self.adminstagedateclosed().toString()) + "&adminstagenumpreviews=" + parseInt(self.adminstagenumpreviews()) + "&adminstagenumperformances=" + parseInt(self.adminstagenumperformances()) + "&adminstagerunning=" + encodeURIComponent(self.adminstagerunning().toString()) + "&adminstageplacefilmed=" + encodeURIComponent(self.adminstageplacefilmed().toString()) + "&adminstageficlocation=" + encodeURIComponent(self.adminstageficlocation().toString()),
+			data: "adminstagetitle=" + encodeURIComponent(self.adminstagetitle().toString()) + "&adminstagesetting=" + encodeURIComponent(self.adminstagesetting().toString()) + "&adminstageiteration=" + parseInt(self.adminstageiteration()) + "&adminstagetype=" + encodeURIComponent(self.adminstagetype().toString()) + "&adminstagegenre=" + encodeURIComponent(self.adminstagegenre().toString()) + "&adminstagesongnum=" + parseInt(self.adminstagesongnum()) + "&adminstageyear=" + parseInt(self.adminstageyear()) + "&adminstagetheatre=" + encodeURIComponent(self.adminstagetheatre().toString()) + "&adminstagedateopened=" + encodeURIComponent(self.adminstagedateopened().toString()) + "&adminstagedateclosed=" + encodeURIComponent(self.adminstagedateclosed().toString()) + "&adminstagenumpreviews=" + parseInt(self.adminstagenumpreviews()) + "&adminstagenumperformances=" + parseInt(self.adminstagenumperformances()) + "&adminstagerunning=" + encodeURIComponent(self.adminstagerunning().toString()) + "&adminstageplacefilmed=" + encodeURIComponent(self.adminstageplacefilmed().toString()) + "&adminstageficlocation=" + encodeURIComponent(self.adminstageficlocation().toString()) + "&adminstageplacefilmedlat=" + parseFloat(self.adminstageplacefilmedlat()) + "&adminstageplacefilmedlong=" + parseFloat(self.adminstageplacefilmedlong()),
 			cache: false,
 			success: function() {
 				alert("Your data was successfully submitted!");
@@ -727,7 +979,4 @@ var TestViewModel = function() {
 			}
 		});
 	}
-
-
 };
-

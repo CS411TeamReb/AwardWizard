@@ -2,33 +2,45 @@
 	include 'layout/header.php';
 ?>
 <div class="main">
-<div class="btn-group" role="group" aria-label="...">
-<p><b>Breakdown: </b></p>
-<label for="tableDropdown">Choose Table: </label>
-<select id="tableDropdown" class="form-control" data-bind="options: availableTables, value: tableToSearch"></select>
-<label><span data-bind="text: tableToSearch"></span> Attributes: </label>
-<select class="form-control dropdownOptions" data-bind="options: columns, value: columnToSearch"></select>
-<br/>
-<button class="btn btn-default" data-bind="click: viewBreakdown">Send</button>
-</div>
-<br/>
-<div class="btn-group" role="group" aria-label="...">
-<table class="table">
-	<thead>
-		<tr>
-			<td>Category</td>
-			<td>Percentage</td>
-
-		</tr>
-	</thead>
-	<tbody data-bind="foreach: breakdownResults">
-		<tr>
-			<td data-bind="text: Category"></td>
-			<td data-bind="text: Percentage"></td>
-		</tr>
-	</tbody>
-</table>
-</div>
+	<div class="panel-group" id="breakdowns" role="tablist" aria-multiselectable="true">
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" id="pieChartsHeading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#breakdowns" href="#pieCharts" aria-expanded="true" aria-controls="pieCharts">Pie Chart Breakdowns</a>
+				</h4>
+			</div>
+			<div id="pieCharts" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="pieChartsHeading">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-3">
+							<p><b>Breakdown: </b></p>
+							<label for="tableDropdown">Choose Table: </label>
+							<select id="tableDropdown" class="form-control" data-bind="options: tablesToBreakdown, value: tableToBreakdown"></select>
+							<label><span data-bind="text: tableToBreakdown"></span> Attributes: </label>
+							<select class="form-control dropdownOptions" data-bind="options: columnsBreakdown, value: columnToBreakdown"></select>
+							<br/>
+							<button class="btn btn-default" data-bind="click: viewBreakdown">Send</button>
+						</div>
+						<div class="col-md-9">
+							<svg id="pieChart"></svg>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab" id="barChartsHeading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#breakdowns" href="#barCharts" aria-expanded="true" aria-controls="barCharts">Bar Chart Breakdowns</a>
+				</h4>
+			</div>
+			<div id="barCharts" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="barChartsHeading">
+				<div class="panel-body">
+					
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <?php
 	include 'layout/footer.php';
