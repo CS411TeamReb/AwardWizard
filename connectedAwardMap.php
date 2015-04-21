@@ -26,7 +26,7 @@
           center: { lat: 39.5, lng: -98.35},
           zoom: 4
         };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
+        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
 
 
 	$.ajax({
