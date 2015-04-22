@@ -127,20 +127,32 @@
 <table class="table" data-bind="visible: tableToSearch() == 'Movies'">
     <thead>
         <tr>
+            <td>Poster</td>
             <td>Title</td>
             <td>Rating</td>
             <td>Box Office</td>
             <td>Budget</td>
             <td>Year</td>
+            <td>AwardName</td>
+            <td>YearGiven</td>
+            <td>NominatedWon</td>
+            <td>ShowName</td>
+            <td>PersonName</td>
         </tr>
     </thead>
     <tbody data-bind="foreach: movieSearchResults ">
         <tr>
+            <td><img data-bind="attr: { src: URL }"></img></td>
             <td data-bind="text: Title"></td>
             <td data-bind="text: Rating"></td>
             <td data-bind="text: BoxOffice"></td>
             <td data-bind="text: Budget"></td>
             <td data-bind="text: Year"></td>
+            <td data-bind="text: AwardName"></td>
+            <td data-bind="text: YearGiven"></td>
+            <td data-bind="text: NominatedWon"></td>
+            <td data-bind="text: ShowName"></td>
+            <td data-bind="text: PersonName"></td>
         </tr>
     </tbody>
 </table>

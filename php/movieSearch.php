@@ -6,10 +6,10 @@
 	$term = $_GET['search'];
 	$column = $_GET['column'];
 	if (is_numeric($term)) {
-		$result = mysql_query(sprintf("SELECT * FROM Movies WHERE %s = %d OR (%s - 10 < %d AND %s + 10 > %d) ORDER BY %s DESC", $column, $term, $column, $term, $column, $term, $column));
+		$result = mysql_query(sprintf("SELECT Movies.WorkID, Title, Rating, BoxOffice, Budget, Year, URL, AwardName, YearGiven, NominatedWon, ShowName, PersonName FROM Movies INNER JOIN Pictures ON Pictures.WorkID = Movies.WorkID INNER JOIN Honor ON Honor.WorkID = Movies.WorkID WHERE Movies.%s = %d OR (Movies.%s - 10 < %d AND Movies.%s + 10 > %d) ORDER BY Movies.%s DESC", $column, $term, $column, $term, $column, $term, $column));
 	}
 	else {
-		$result = mysql_query(sprintf("SELECT * FROM Movies WHERE %s LIKE '%%%s%%'", $column, $term));
+		$result = mysql_query(sprintf("SELECT Movies.WorkID, Title, Rating, BoxOffice, Budget, Year, URL, AwardName, YearGiven, NominatedWon, ShowName, PersonName FROM Movies INNER JOIN Pictures ON Pictures.WorkID = Movies.WorkID INNER JOIN Honor ON Honor.WorkID = Movies.WorkID WHERE Movies.%s LIKE '%%%s%%'", $column, $term));
 	}
 
 	if (!$result) {

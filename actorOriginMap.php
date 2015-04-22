@@ -28,6 +28,8 @@
         };
         var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions); 
+            
+            alert("Welcome to the Actor/Actress Origin Map! \nEach pin on this map represents an actor or actress, and the pin is place in the location where the person was born. The yellow pins mean that the person won an award, while the grey pins means that the person was nominated for an award, but did not win. Click on a marker to view more information about the persno and the award for which he/she was nominated or won. If there was a movie, tv show, or stage involved, it is printed in parentheses.\n Disclaimer: the map takes awhile to load because of the intensity of the SQL query. Please be patient!");
 					
 	$.ajax({
 		url: "php/getActorOriginLocations.php",
@@ -38,7 +40,7 @@
 				
 			var markerArray = [];
 			var infoWindowArray = [];
-				
+					
 			for (var i = 0; i < actorOriginsData.length; i++) {
 			var data = actorOriginsData[i];
 
@@ -90,7 +92,7 @@
       			})(i));
     					
       			}
-				
+			
 		}
 	});	
  	
@@ -126,10 +128,8 @@
   						<li role="presentation"><a href="filmedInMap.php">Filmed Locations</a></li>
   						<li role="presentation"><a href="connectedAwardMap.php">Connected Awards</a></li>
   						<li role="presentation" class="active"><a href="actorOriginMap.php">Actor/Actress Origin</a></li>
-
 					</ul> 
-
-
+				</div>
 			</div>
 			
 			

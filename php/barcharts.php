@@ -16,7 +16,7 @@
 		$result = mysql_query("SELECT Location AS L, COUNT(*) AS C FROM Locations WHERE FilmedOrFiction = 'Filmed' GROUP BY Location ORDER BY C DESC");
 	}
 	else if (strcmp($table, "Movies") == 0) {
-		$result = mysql_query("SELECT Title, BoxOffice, Budget, NumNominated FROM Movies INNER JOIN (SELECT WorkID AS W, COUNT(*) AS NumNominated FROM Honor WHERE LEFT(WorkID, 1) = 'M' GROUP BY WorkID) A WHERE WorkID = W");
+		$result = mysql_query("SELECT Title AS L, BoxOffice, Budget, NumNominated AS C FROM Movies INNER JOIN (SELECT WorkID AS W, COUNT(*) AS NumNominated FROM Honor WHERE LEFT(WorkID, 1) = 'M' GROUP BY WorkID) A WHERE WorkID = W");
 	}
 
 	if (!$result) {
