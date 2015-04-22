@@ -77,14 +77,25 @@ function createPieChart(jsonData, table, column) {
 function createBarChart(jsonData, table) {
 	d3.select("#barChart").selectAll("*").remove();
 	var rangeScale = 0;
+	var keys = [];
 	if (table === "Genre") {
 		rangeScale = 5;
+		d3.select("#groupBarChart").selectAll("*").remove();
+		keys.push("Number of Media Items");
 	}
 	else if (table === "Show") {
 		rangeScale = 20;
+		d3.select("#groupBarChart").selectAll("*").remove();
+		keys.push("Number of Awards");
 	}
 	else if (table === "Location") {
 		rangeScale = 1;
+		d3.select("#groupBarChart").selectAll("*").remove();
+		keys.push("Number of movies filmed");
+	}
+	else if (table === "Movies") {
+		rangeScale = 1;
+		keys.push("Nominations");
 	}
 
 	var margin = {top: 30, right: 20, bottom: 60, left: 40},
@@ -143,10 +154,29 @@ function createBarChart(jsonData, table) {
 		.attr("width", x.rangeBand())
 		.attr("y", function(d) { return y(parseFloat(d.C)); })
 		.attr("height", function(d) { return height - y(parseFloat(d.C)); });
+
+	var legend = svg.selectAll(".legend")
+    	.data(keys)
+    	.enter().append("g")
+    	.attr("class", "legend")
+    	.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+    legend.append("rect")
+      	.attr("x", width - 18)
+      	.attr("width", 18)
+      	.attr("height", 18)
+      	.style("fill", "#551A8B");
+
+    legend.append("text")
+      	.attr("x", width - 24)
+      	.attr("y", 9)
+      	.attr("dy", ".35em")
+      	.style("text-anchor", "end")
+      	.text(function(d) { return d; });
 }
 
 function createGroupBarChart(jsonData) {
-	d3.select("#barChart").selectAll("*").remove();
+	d3.select("#groupBarChart").selectAll("*").remove();
 
 	var margin = {top: 20, right: 20, bottom: 60, left: 40},
 		width = 960 - margin.left - margin.right,
@@ -171,7 +201,7 @@ function createGroupBarChart(jsonData) {
 		.scale(y)
 		.orient("left");
 
-	var svg = d3.select("#barChart")
+	var svg = d3.select("#groupBarChart")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
@@ -184,7 +214,7 @@ function createGroupBarChart(jsonData) {
 
 	console.log(jsonData);
 
-	x0.domain(jsonData.map(function(d) { return d.Title; }));
+	x0.domain(jsonData.map(function(d) { return d.L; }));
 	x1.domain(measures).rangeRoundBands([0, x0.rangeBand()]);
 	y.domain([0, d3.max(jsonData, function(d) { return d3.max(d.values, function(d) { return d.value;}); }) ]);
 
@@ -212,7 +242,7 @@ function createGroupBarChart(jsonData) {
     	.data(jsonData)
     	.enter().append("g")
     	.attr("class", "g")
-    	.attr("transform", function(d) { return "translate(" + x0(d.Title) + ",0)"; });
+    	.attr("transform", function(d) { return "translate(" + x0(d.L) + ",0)"; });
 
     state.selectAll("rect")
     	.data(function(d) { return d.values; })

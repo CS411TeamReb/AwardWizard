@@ -761,6 +761,7 @@ var TestViewModel = function() {
 			success: function(results) {
 				var chartData = JSON.parse(results);
 				createGroupBarChart(chartData);
+				createBarChart(chartData, "Movies");
 			},
 			error: function() {
 				alert("Something went wrong");
