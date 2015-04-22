@@ -39,7 +39,7 @@
 					<button class="btn btn-default" data-bind="click: function() {viewBarChart('Genre')}">Genre Counts</button>
 					<button class="btn btn-default" data-bind="click: function() {viewBarChart('Show')}">Show Sums</button>
 					<button class="btn btn-default" data-bind="click: function() {viewBarChart('Location')}">Location Counts</button>
-					<button  class="btn btn-default" data-bind="click: viewGroupBarChart">BoxOffice Correlation</button>
+					<button  class="btn btn-default" data-bind="click: viewGroupBarChart">Box Office, Budget, Nomination Correlation</button>
 					<svg id="barChart"></svg>
 					<svg id="groupBarChart"></svg>
 				</div>
