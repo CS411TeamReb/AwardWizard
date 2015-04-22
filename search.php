@@ -136,11 +136,17 @@
     </thead>
     <tbody data-bind="foreach: movieSearchResults ">
         <tr>
+            <td><img data-bind="attr: { src: URL }"></img></td>
             <td data-bind="text: Title"></td>
             <td data-bind="text: Rating"></td>
             <td data-bind="text: BoxOffice"></td>
             <td data-bind="text: Budget"></td>
             <td data-bind="text: Year"></td>
+            <td data-bind="text: AwardName"></td>
+            <td data-bind="text: YearGiven"></td>
+            <td data-bind="text: NominatedWon"></td>
+            <td data-bind="text: ShowName"></td>
+            <td data-bind="text: PersonName"></td>
         </tr>
     </tbody>
 </table>

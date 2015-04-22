@@ -56,6 +56,23 @@ var TestViewModel = function() {
 		self.Year = ko.observable(year || 2015);
 	}
 
+	function MovieSearch(id, title, rating, boxoffice, budget, year, url, awardname, yeargiven, nominated, showname, person) 
+	{
+		var self = this;
+		self.WorkID = ko.observable(id || "");
+		self.Title = ko.observable(title || "");
+		self.Rating = ko.observable(rating || "");
+		self.BoxOffice = ko.observable(boxoffice || "");
+		self.Budget = ko.observable(budget || "");
+		self.Year = ko.observable(year || 2015);
+		self.URL = ko.observable(url || "");
+		self.AwardName = ko.observable(awardname || "");
+		self.YearGiven = ko.observable(yeargiven || "");
+		self.NominatedWon = ko.observable(nominated || "");
+		self.ShowName = ko.observable(showname || "");
+		self.PersonName = ko.observable(person || "");
+	}
+
 	function Music(id, title, artist, single, eYear, genre, rYear) {
 		var self = this;
 		self.WorkID = ko.observable(id || "");
@@ -434,7 +451,7 @@ var TestViewModel = function() {
     self.personSearchResults = ko.observableArray([new People()]);
     self.televisionSearchResults = ko.observableArray([new Television()]);
     self.stageSearchResults = ko.observableArray([new Stage()]);
-    self.movieSearchResults = ko.observableArray([new Movie()]);
+    self.movieSearchResults = ko.observableArray([new MovieSearch()]);
     self.musicSearchResults = ko.observableArray([new Music()]);
     self.honorSearchResults = ko.observableArray([new Honor()]);
     self.breakdownResults = ko.observableArray([new Result()]);
@@ -526,7 +543,7 @@ var TestViewModel = function() {
 			success: function(shows) {
             	var showData = JSON.parse(shows);
             	var mappedShows = $.map(showData, function(item) {
-                	return new Movie(item.WorkID, item.Title, item.Rating, item.BoxOffice, item.Budget, item.Year);
+                	return new MovieSearch(item.WorkID, item.Title, item.Rating, item.BoxOffice, item.Budget, item.Year, item.URL, item.AwardName, item.YearGiven, item.NominatedWon, item.ShowName, item.PersonName);
                 });
                 self.movieSearchResults.removeAll();
                 for(var i = 0; i < mappedShows.length; i++) {
