@@ -6,7 +6,7 @@
 <tr>
 <td><div class="btn-group" role="group" aria-label="...">
   <button type="button" class="btn btn-default" block><a href="admin.php">Admin</a></button>
-  <button type="button" class="btn btn-default" block><a href="user.php">User</a></button>
+  <!--<button type="button" class="btn btn-default" block><a href="user.php">User</a></button>-->
 </div></td>
 </tr>
 
